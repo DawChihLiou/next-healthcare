@@ -9,7 +9,7 @@
     "dev": "next dev",
     "now-build": "next build",
     "deploy": "now",
-    "release": "standard-version && yarn deploy",
+    "release": "standard-version",
     "release:dry": "yarn release --dry-run",
     "cz": "git-cz"
   },
