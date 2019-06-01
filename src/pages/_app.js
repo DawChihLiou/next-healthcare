@@ -5,9 +5,7 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import { ThemeProvider } from '@material-ui/styles';
 
-import theme from '../src/theme';
-
-import 'typeface-roboto';
+import theme from '../theme';
 
 export default function App({ Component, pageProps }) {
   useEffect(() => {
