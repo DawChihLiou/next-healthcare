@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/DawChihLiou/next-healthcare/compare/v0.1.0...v0.1.1) (2019-06-01)
+
+
+### Build System
+
+* **package.json:** remove deploy from release script ([59531c4](https://github.com/DawChihLiou/next-healthcare/commit/59531c4))
+
+
+
 ## 0.1.0 (2019-06-01)
 
 
