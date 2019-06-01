@@ -1,12 +1,48 @@
 {
+  "name": "next-healthcare",
+  "private": false,
   "scripts": {
+    "start": "next start",
     "build": "next build",
-    "dev": "next",
-    "now-build": "next build"
+    "dev": "next dev",
+    "now-build": "next build",
+    "deploy": "now",
+    "release": "standard-version",
+    "release:dry": "yarn release --dry-run",
+    "cz": "git-cz"
   },
   "dependencies": {
+    "@material-ui/core": "^4.0.1",
+    "@material-ui/icons": "^4.0.1",
+    "@material-ui/styles": "^4.0.1",
+    "@material-ui/system": "^4.0.1",
+    "@zeit/next-css": "^1.0.1",
+    "@zeit/next-sass": "^1.0.1",
+    "express": "^4.17.1",
     "next": "^8.0.0",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0"
+    "node-sass": "^4.12.0",
+    "now": "^15.3.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-icons": "^3.7.0",
+    "styled-jsx": "^3.2.1",
+    "typeface-roboto": "^0.0.54"
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && yarn cz --hook"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "devDependencies": {
+    "commitizen": "^3.1.1",
+    "cz-conventional-changelog": "^2.1.0",
+    "husky": "^2.3.0",
+    "prettier": "^1.17.1",
+    "standard-version": "^6.0.1"
   }
 }
