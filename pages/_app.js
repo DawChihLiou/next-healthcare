@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import { ThemeProvider } from '@material-ui/styles';
 
-import theme from '../theme';
+import theme from '../src/theme';
 
 import 'typeface-roboto';
 
@@ -22,10 +23,12 @@ export default function App({ Component, pageProps }) {
       <Head>
         <title>Next Healthcare</title>
       </Head>
-      <CssBaseline />
 
       <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
+        <CssBaseline />
+        <Box height="100vh">
+          <Component {...pageProps} />
+        </Box>
       </ThemeProvider>
     </Container>
   );
