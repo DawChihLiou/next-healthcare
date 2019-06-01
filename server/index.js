@@ -2,7 +2,7 @@ const express = require('express');
 const next = require('next');
 const bodyParser = require('body-parser');
 
-const apiRouter = require('../src/api');
+const router = require('../src/api');
 
 const port = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== 'production';
@@ -20,7 +20,7 @@ app
 
     server.use(bodyParser.json());
     server.use(bodyParser.urlencoded({ extended: true }));
-    server.use('/api', apiRouter);
+    server.use('/api', router);
 
     server.get('*', (req, res) => {
       return handle(req, res);
