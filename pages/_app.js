@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import { ThemeProvider } from '@material-ui/styles';
 
-import theme from '../theme';
+import theme from '../src/theme';
 
 export default function App({ Component, pageProps }) {
   useEffect(() => {

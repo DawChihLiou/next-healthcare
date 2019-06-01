@@ -1,4 +1,4 @@
-import Login from '../components/login';
+import Login from '../src/components/login';
 
 export default function Index() {
   return <Login />;

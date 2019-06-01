@@ -4,10 +4,10 @@
   "private": false,
   "license": "Apache License 2.0",
   "scripts": {
-    "dev": "next dev ./src",
-    "start": "next start ./src",
-    "build": "next build ./src",
-    "now-build": "next build ./src",
+    "dev": "nodemon ./server",
+    "start": "NODE_ENV=production node ./server",
+    "build": "next build",
+    "now-build": "next build",
     "deploy": "now",
     "release": "standard-version",
     "release:dry": "yarn release --dry-run",
@@ -22,6 +22,7 @@
     "@zeit/next-sass": "^1.0.1",
     "clsx": "^1.0.4",
     "express": "^4.17.1",
+    "mongoose": "^5.5.12",
     "next": "^8.0.0",
     "next-images": "^1.1.1",
     "node-sass": "^4.12.0",
@@ -46,6 +47,7 @@
     "commitizen": "^3.1.1",
     "cz-conventional-changelog": "^2.1.0",
     "husky": "^2.3.0",
+    "nodemon": "^1.19.1",
     "prettier": "^1.17.1",
     "standard-version": "^6.0.1"
   }
