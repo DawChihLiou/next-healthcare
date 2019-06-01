@@ -1,13 +1,15 @@
 {
   "name": "next-healthcare",
+  "version": "0.0.0",
   "private": false,
+  "license": "Apache License 2.0",
   "scripts": {
     "start": "next start",
     "build": "next build",
     "dev": "next dev",
     "now-build": "next build",
     "deploy": "now",
-    "release": "standard-version",
+    "release": "standard-version && yarn deploy",
     "release:dry": "yarn release --dry-run",
     "cz": "git-cz"
   },
