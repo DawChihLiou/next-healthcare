@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import fetch from 'isomorphic-unfetch';
 import clsx from 'clsx';
+import Router from 'next/router';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -17,18 +18,7 @@ function Login({ url }) {
   const classes = useStyles();
 
   const handleLogin = useCallback(async () => {
-    try {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
-      });
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
+    Router.push('/search');
   }, []);
 
   return (

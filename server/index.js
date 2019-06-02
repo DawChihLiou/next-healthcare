@@ -4,6 +4,7 @@ const next = require('next');
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const mongoose = require('mongoose');
 
 const router = require('./api');
 const passport = require('./passport');
@@ -20,7 +21,15 @@ app
     process.exit(1);
   })
   .then(() => {
+    const db = mongoose.connection;
     const server = express();
+
+    mongoose.connect(
+      'mongodb://healthcare:healthcare123@ds263876.mlab.com:63876/healthcare',
+      {
+        useNewUrlParser: true,
+      }
+    );
 
     server.use(bodyParser.json());
     server.use(bodyParser.urlencoded({ extended: true }));
@@ -43,5 +52,10 @@ app
     server.listen(port, err => {
       if (err) throw err;
       console.log('Server is listening to port', port);
+    });
+
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', function() {
+      console.log('database connected successfully.');
     });
   });
