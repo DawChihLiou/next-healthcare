@@ -1,27 +1,35 @@
-import fetch from 'isomorphic-unfetch';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import ProviderList from '../src/components/provider-list';
+import { fetchProviders } from '../src/store/actions/provider';
 
-Search.getInitialProps = async ({ req }) => {
-  const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
-  let data = [];
-
-  const getProvidersEndpoint = process.browser
-    ? `${protocol}://${window.location.host}/api/v1.0/providers`
-    : `${protocol}://${req.headers.host}/api/v1.0/providers`;
-
-  try {
-    const response = await fetch(getProvidersEndpoint, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    });
-    data = await response.json();
-  } catch (error) {
-    console.log('erro', error);
-  }
-
-  return { url: getProvidersEndpoint, providers: data };
+Search.getInitialProps = async ({ req, store }) => {
+  // await store.dispatch(fetchProviders());
+  // const state = store.getState();
+  // return { providers: get(state, 'provider.list') };
 };
 
-export default function Search({ providers }) {
-  return <ProviderList providers={providers} />;
+export default function Search() {
+  const dispatch = useDispatch();
+  const { list, isLoading, error } = useSelector(state => state.provider);
+
+  useEffect(() => {
+    dispatch(fetchProviders());
+  }, []);
+
+  if (isLoading) {
+    return <CircularProgress />;
+  }
+
+  if (error) {
+    return <p>there's an error</p>;
+  }
+
+  if (!list) {
+    return <p>no data</p>;
+  }
+
+  return <ProviderList providers={list} />;
 }
