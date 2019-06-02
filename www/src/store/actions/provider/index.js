@@ -1,5 +1,7 @@
 import fetch from 'isomorphic-unfetch';
 
+import { getRootUrl } from '../../../utils';
+
 export const fetchProvidersRequested = () => ({
   type: 'FETCH_PROVIDERS_REQUESTED',
 });
@@ -15,12 +17,13 @@ export const fetchProvidersFailed = payload => ({
 });
 
 export const fetchProviders = () => async dispatch => {
-  const getProvidersEndpoint = `/api/v1.0/providers`;
+  const url = `${getRootUrl()}/api/providers`;
+  console.log('url', url);
 
   dispatch(fetchProvidersRequested());
 
   try {
-    const response = await fetch(getProvidersEndpoint, {
+    const response = await fetch(url, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     });
