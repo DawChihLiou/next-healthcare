@@ -1,16 +1,15 @@
 const express = require('express');
-const passport = require('passport');
+const passport = require('../passport');
 
 const router = express.Router();
 
-router.get('/', passport.authenticate('github'));
+router.get('/v1.0/auth', passport.authenticate('github'));
 
 router.get(
-  '/callback',
+  '/v1.0/auth/callback',
   passport.authenticate('github', { failureRedirect: '/' }),
   function(req, res) {
-    console.log('auth success', res);
-    res.redirect('/about');
+    res.json(req.user);
   }
 );
 
