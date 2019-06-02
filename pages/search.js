@@ -15,7 +15,6 @@ Search.getInitialProps = async ({ req }) => {
       headers: { 'Content-Type': 'application/json' },
     });
     data = await response.json();
-    console.log('data', data);
   } catch (error) {
     console.log('erro', error);
   }
