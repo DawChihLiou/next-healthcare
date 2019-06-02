@@ -1,4 +1,7 @@
+import { useCallback } from 'react';
+import fetch from 'isomorphic-unfetch';
 import clsx from 'clsx';
+
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -10,8 +13,23 @@ import { useStyles } from './hooks';
 
 import LogoIcon from './svg/logo.svg';
 
-export default function Login() {
+function Login({ url }) {
   const classes = useStyles();
+
+  const handleLogin = useCallback(async () => {
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   return (
     <Grid
@@ -31,7 +49,7 @@ export default function Login() {
             />
           </CardContent>
           <CardContent className={classes.content}>
-            <Button>
+            <Button onClick={handleLogin}>
               <span>Sign in with Github</span>
               <GoMarkGithub size="1.5em" className={classes.rightIcon} />
             </Button>
@@ -41,3 +59,5 @@ export default function Login() {
     </Grid>
   );
 }
+
+export default Login;

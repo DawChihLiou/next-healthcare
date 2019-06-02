@@ -4,6 +4,6 @@ const login = require('../login');
 
 const router = express.Router();
 
-router.use('/login', login);
+router.use('/auth', login);
 
 module.exports = router;
