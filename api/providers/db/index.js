@@ -4,20 +4,13 @@ const connectDb = () => {
   const { MLAB_URL, MLAB_USERNAME, MLAB_PASSWORD } = process.env;
   const url = `mongodb://${MLAB_USERNAME}:${MLAB_PASSWORD}${MLAB_URL}`;
 
-  console.log(
-    '------------test--------------\n',
-    MLAB_URL,
-    MLAB_USERNAME,
-    MLAB_PASSWORD,
-    '\n------------------------------'
-  );
-
-  try {
-    mongoose.Promise = global.Promise;
-    mongoose.connect(url, { useNewUrlParser: true });
-  } catch (error) {
-    throw error;
-  }
+  mongoose.Promise = global.Promise;
+  mongoose
+    .connect(url, { useNewUrlParser: true })
+    .then(
+      () => console.log('MongoDB connection established.'),
+      err => console.log('MongoDB connection failed.', err)
+    );
 };
 
 module.exports = connectDb;
