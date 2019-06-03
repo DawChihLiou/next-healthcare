@@ -62,7 +62,6 @@ export default function Filter({ done }) {
     const sanitize = flow([toNumber, toString]);
 
     if (name === 'state') {
-      console.log('here', name, value);
       setValues(vals => ({
         ...vals,
         [name]: value,

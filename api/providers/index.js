@@ -86,11 +86,6 @@ const findProviders = async (req, res) => {
       }
     }
     const providers = await Providers.find(where);
-    console.log(
-      '------------->\n',
-      where,
-      `\nfound ${providers.length} records`
-    );
     send(res, 200, providers);
   } catch (error) {
     send(res, 500, error);
