@@ -1,11 +1,29 @@
 {
   "version": 2,
   "name": "next-healthcare",
-  "builds": [{ "src": "next.config.js", "use": "@now/next" }],
+  "builds": [
+    {
+      "src": "www/package.json",
+      "use": "@now/next"
+    },
+    {
+      "src": "api/*/*.js",
+      "use": "@now/node"
+    }
+  ],
   "routes": [
     {
-      "src": "/_next/static/(?:[^/]+/pages|chunks|runtime)/.+",
-      "headers": { "cache-control": "immutable,max-age=31536000" }
+      "src": "/api/(.*)",
+      "dest": "/api/$1/index.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/www/$1"
     }
-  ]
+  ],
+  "env": {
+    "MLAB_URL": "@mlab_url",
+    "MLAB_USERNAME": "@mlab_username",
+    "MLAB_PASSWORD": "@mlab_password"
+  }
 }
