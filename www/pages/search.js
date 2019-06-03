@@ -1,23 +1,62 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Box from '@material-ui/core/Box';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import get from 'lodash/get';
+import { makeStyles } from '@material-ui/core/styles';
 
-import { fetchProviders } from '../src/store/actions/provider';
+import Fab from '@material-ui/core/Fab';
+import Hidden from '@material-ui/core/Hidden';
+import Container from '@material-ui/core/Container';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import { selectProvider } from '../src/selectors';
+import { fetchProviders } from '../src/store/actions/provider';
 
 import Filter from '../src/components/filter';
 import ProviderList from '../src/components/provider-list';
+
+const useStyles = makeStyles(theme => ({
+  container: {
+    position: 'sticky',
+    top: 0,
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: theme.shape.borderRadius,
+    marginBottom: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+    borderBottom: `1px solid ${theme.palette.background.default}`,
+  },
+  fab: {
+    position: 'fixed',
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+  },
+}));
 
 Search.getInitialProps = async ({ req, store }) => {
   await store.dispatch(fetchProviders());
 
   const state = store.getState();
-  return { providers: get(state, 'provider.list') };
+  return { providers: selectProvider(state) };
 };
 
 export default function Search() {
+  const classes = useStyles();
   const { list, isLoading, error } = useSelector(selectProvider);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const toggleDrawer = open => event => {
+    if (
+      event &&
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+
+    setIsDrawerOpen(open);
+  };
 
   if (isLoading) {
     return <CircularProgress />;
@@ -33,8 +72,32 @@ export default function Search() {
 
   return (
     <Box>
-      <Filter />
+      <Hidden xsDown>
+        <Container className={classes.container}>
+          <Filter done={toggleDrawer(false)} />
+        </Container>
+      </Hidden>
+
       <ProviderList providers={list} />
+
+      <Hidden smUp>
+        <SwipeableDrawer
+          anchor="bottom"
+          open={isDrawerOpen}
+          onClose={toggleDrawer(false)}
+          onOpen={toggleDrawer(true)}
+        >
+          <Filter done={toggleDrawer(false)} />
+        </SwipeableDrawer>
+        <Fab
+          color="primary"
+          aria-label="Filter"
+          className={classes.fab}
+          onClick={toggleDrawer(true)}
+        >
+          <FilterListIcon />
+        </Fab>
+      </Hidden>
     </Box>
   );
 }

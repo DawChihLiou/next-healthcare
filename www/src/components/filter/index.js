@@ -4,8 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
 import Select from '@material-ui/core/Select';
+import Button from '@material-ui/core/Button';
+import Hidden from '@material-ui/core/Hidden';
 import MenuItem from '@material-ui/core/MenuItem';
-import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -13,15 +14,6 @@ import FormControl from '@material-ui/core/FormControl';
 import { selectFilterSettings, selectFilter } from '../../../src/selectors';
 
 const useStyles = makeStyles(theme => ({
-  container: {
-    position: 'sticky',
-    top: 0,
-    backgroundColor: theme.palette.background.paper,
-    borderRadius: theme.shape.borderRadius,
-    marginBottom: theme.spacing(2),
-    paddingBottom: theme.spacing(2),
-    borderBottom: `1px solid ${theme.palette.background.default}`,
-  },
   gridContainer: {
     padding: theme.spacing(2),
   },
@@ -35,9 +27,19 @@ const useStyles = makeStyles(theme => ({
   select: {
     textAlign: 'left',
   },
+  right: {
+    textAlign: 'right',
+    marginRight: theme.spacing(1),
+  },
+  centered: {
+    textAlign: 'center',
+  },
+  extended: {
+    minWidth: `calc(100% - ${theme.spacing(4)}px)`,
+  },
 }));
 
-export default function Filter() {
+export default function Filter({ done }) {
   const classes = useStyles();
   const settings = useSelector(selectFilterSettings);
   const filter = useSelector(selectFilter);
@@ -101,10 +103,29 @@ export default function Filter() {
     [values]
   );
   return (
-    <Container className={classes.container}>
-      <Grid container className={classes.gridContainer}>
-        {filters}
-      </Grid>
-    </Container>
+    <Grid container className={classes.gridContainer}>
+      {filters}
+      <Hidden smUp>
+        <Grid item xs={12} className={classes.centered}>
+          <Button
+            size="large"
+            color="primary"
+            variant="contained"
+            onClick={done}
+            className={classes.extended}
+          >
+            Apply
+          </Button>
+        </Grid>
+      </Hidden>
+
+      <Hidden xsDown>
+        <Grid item xs={12} className={classes.right}>
+          <Button color="primary" onClick={done}>
+            Apply
+          </Button>
+        </Grid>
+      </Hidden>
+    </Grid>
   );
 }
