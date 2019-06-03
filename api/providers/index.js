@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const { send } = require('micro');
 const { router, get } = require('microrouter');
 
@@ -10,10 +12,13 @@ const notfound = (req, res) => {
   send(res, 404, 'Not found route');
 };
 
-const findProviders = async () => {
-  const providers = Providers.find({ providerState: 'AL' });
-  send(res, 200, providers);
+const findProviders = async (req, res) => {
+  try {
+    const providers = await Providers.find({ providerState: 'AL' });
+    send(res, 200, providers);
+  } catch (error) {
+    send(res, 500, error);
+  }
 };
 
-module.exports = app;
-module.exports = router(get('/', findProviders), get('/*', notfound));
+module.exports = router(get('/*', findProviders));
