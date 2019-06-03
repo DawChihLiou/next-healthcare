@@ -16,8 +16,10 @@ export default function Search() {
   const { list, isLoading, error } = useSelector(state => state.provider);
 
   useEffect(() => {
-    dispatch(fetchProviders());
-  }, []);
+    if (!list) {
+      dispatch(fetchProviders());
+    }
+  }, [list]);
 
   if (isLoading) {
     return <CircularProgress />;
