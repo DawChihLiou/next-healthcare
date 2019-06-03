@@ -1,9 +1,11 @@
 import { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import Box from '@material-ui/core/Box';
+import get from 'lodash/get';
+import isEmpty from 'lodash/isEmpty';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Fab from '@material-ui/core/Fab';
+import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import Container from '@material-ui/core/Container';
@@ -40,7 +42,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 Search.getInitialProps = async ({ req, store }) => {
-  await store.dispatch(fetchProviders());
+  await store.dispatch(fetchProviders(get(store.getState(), 'filter')));
 
   const state = store.getState();
   return { providers: selectProvider(state) };
@@ -76,10 +78,10 @@ export default function Search() {
       return <p>There's an error. Please try again.</p>;
     }
 
-    if (!list) {
+    if (isEmpty(list)) {
       return (
         <p>
-          No data found for your filter criteria. Please adjust and try again
+          No data found with your filter criteria. Please adjust and try again
         </p>
       );
     }
