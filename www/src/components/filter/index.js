@@ -1,6 +1,11 @@
 import { useMemo, useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
+import flow from 'lodash/flow';
+import isEmpty from 'lodash/isEmpty';
+import isNumber from 'lodash/isNumber';
+import toNumber from 'lodash/toNumber';
+import toString from 'lodash/toString';
 
 import Grid from '@material-ui/core/Grid';
 import Select from '@material-ui/core/Select';
@@ -49,15 +54,21 @@ export default function Filter({ done }) {
 
   const handleChange = useCallback(e => {
     const { name, value } = e.target;
-    setValues(vals => ({
-      ...vals,
-      [name]: value,
-    }));
+    const isValid = flow([toNumber, isNumber]);
+    const sanitize = flow([toNumber, toString]);
+
+    if (name === 'state' || isEmpty(value) || isValid(value)) {
+      setValues(vals => ({
+        ...vals,
+        [name]: isEmpty(value) ? '' : sanitize(value),
+      }));
+    }
   }, []);
+  console.log(values);
 
   const filters = useMemo(
     () =>
-      settings.map(({ name, display, options }) => {
+      settings.map(({ name, display, options, type }) => {
         return (
           <Grid
             key={`filter-${name}`}
@@ -89,11 +100,12 @@ export default function Filter({ done }) {
                 </>
               ) : (
                 <TextField
-                  value={values[name]}
+                  value={`${values[name]}`}
                   id={name}
                   name={name}
                   label={display}
                   onChange={handleChange}
+                  type={type}
                 />
               )}
             </FormControl>

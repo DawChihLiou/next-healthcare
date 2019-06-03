@@ -55,17 +55,27 @@ const initialState = [
       { name: 'Wyoming', value: 'WY' },
     ],
   },
-  { name: 'minDischarges', display: 'Min Discharges' },
+  { name: 'minDischarges', display: 'Min Discharges', type: 'number' },
   { name: 'maxDischarges', display: 'Max Discharges' },
-  { name: 'minAverageCoveredCharges', display: 'Min Average Covered Charges' },
-  { name: 'maxAverageCoveredCharges', display: 'Max Average Covered charges' },
+  {
+    name: 'minAverageCoveredCharges',
+    display: 'Min Average Covered Charges',
+    type: 'number',
+  },
+  {
+    name: 'maxAverageCoveredCharges',
+    display: 'Max Average Covered charges',
+    type: 'number',
+  },
   {
     name: 'minAverageMedicarePayments',
     display: 'Min Average Medicare Payments',
+    type: 'number',
   },
   {
     name: 'maxAverageMedicarePayments',
     display: 'Max Average Medicare Payments',
+    type: 'number',
   },
 ];
 
