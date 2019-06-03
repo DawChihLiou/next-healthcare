@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import Box from '@material-ui/core/Box';
-import get from 'lodash/get';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Fab from '@material-ui/core/Fab';
+import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import Container from '@material-ui/core/Container';
 import FilterListIcon from '@material-ui/icons/FilterList';
@@ -32,6 +32,11 @@ const useStyles = makeStyles(theme => ({
     bottom: theme.spacing(2),
     right: theme.spacing(2),
   },
+  centeredContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: theme.spacing(4),
+  },
 }));
 
 Search.getInitialProps = async ({ req, store }) => {
@@ -58,17 +63,29 @@ export default function Search() {
     setIsDrawerOpen(open);
   };
 
-  if (isLoading) {
-    return <CircularProgress />;
-  }
+  const content = useMemo(() => {
+    if (isLoading) {
+      return (
+        <Grid container className={classes.centeredContainer}>
+          <CircularProgress />
+        </Grid>
+      );
+    }
 
-  if (error) {
-    return <p>there's an error</p>;
-  }
+    if (error) {
+      return <p>There's an error. Please try again.</p>;
+    }
 
-  if (!list) {
-    return <p>no data</p>;
-  }
+    if (!list) {
+      return (
+        <p>
+          No data found for your filter criteria. Please adjust and try again
+        </p>
+      );
+    }
+
+    return <ProviderList providers={list} />;
+  }, [isLoading, error, list]);
 
   return (
     <Box>
@@ -78,7 +95,7 @@ export default function Search() {
         </Container>
       </Hidden>
 
-      <ProviderList providers={list} />
+      {content}
 
       <Hidden smUp>
         <SwipeableDrawer

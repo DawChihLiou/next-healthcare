@@ -1,5 +1,7 @@
 import fetch from 'isomorphic-unfetch';
+import forOwn from 'lodash/forOwn';
 
+import { setFilter } from '../filter';
 import { getRootUrl } from '../../../utils';
 
 export const fetchProvidersRequested = () => ({
@@ -16,10 +18,20 @@ export const fetchProvidersFailed = payload => ({
   payload,
 });
 
-export const fetchProviders = () => async dispatch => {
-  const url = `${getRootUrl()}/api/providers`;
-  console.log('url', url);
+function makeRoute(url, options) {
+  let query = '';
 
+  forOwn(options, (value, key) => {
+    query = `${query}&${key}=${value}`;
+  });
+
+  return `${url}?${query}`;
+}
+
+export const fetchProviders = payload => async dispatch => {
+  const url = makeRoute(`${getRootUrl()}/api/providers`, payload);
+
+  dispatch(setFilter(payload));
   dispatch(fetchProvidersRequested());
 
   try {

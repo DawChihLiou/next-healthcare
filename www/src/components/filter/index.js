@@ -1,5 +1,5 @@
 import { useMemo, useState, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import flow from 'lodash/flow';
 import isEmpty from 'lodash/isEmpty';
@@ -16,6 +16,7 @@ import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 
+import { fetchProviders } from '../../../src/store/actions/provider';
 import { selectFilterSettings, selectFilter } from '../../../src/selectors';
 
 const useStyles = makeStyles(theme => ({
@@ -46,25 +47,41 @@ const useStyles = makeStyles(theme => ({
 
 export default function Filter({ done }) {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const settings = useSelector(selectFilterSettings);
   const filter = useSelector(selectFilter);
   const [values, setValues] = useState({
     ...filter,
   });
 
+  const apply = useCallback(payload => dispatch(fetchProviders(payload)), []);
+
   const handleChange = useCallback(e => {
     const { name, value } = e.target;
     const isValid = flow([toNumber, isNumber]);
     const sanitize = flow([toNumber, toString]);
 
-    if (name === 'state' || isEmpty(value) || isValid(value)) {
+    if (name === 'state') {
+      console.log('here', name, value);
+      setValues(vals => ({
+        ...vals,
+        [name]: value,
+      }));
+      return;
+    }
+
+    if (isEmpty(value) || isValid(value)) {
       setValues(vals => ({
         ...vals,
         [name]: isEmpty(value) ? '' : sanitize(value),
       }));
     }
   }, []);
-  console.log(values);
+
+  const handleApply = useCallback(() => {
+    apply(values);
+    done();
+  }, [values]);
 
   const filters = useMemo(
     () =>
@@ -123,7 +140,7 @@ export default function Filter({ done }) {
             size="large"
             color="primary"
             variant="contained"
-            onClick={done}
+            onClick={handleApply}
             className={classes.extended}
           >
             Apply
@@ -133,7 +150,7 @@ export default function Filter({ done }) {
 
       <Hidden xsDown>
         <Grid item xs={12} className={classes.right}>
-          <Button color="primary" onClick={done}>
+          <Button color="primary" onClick={handleApply}>
             Apply
           </Button>
         </Grid>

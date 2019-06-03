@@ -1,11 +1,11 @@
 const initialState = {
-  state: 'AL',
-  minDischarges: 0,
-  maxDischarges: 0,
-  minAverageCoveredCharges: 0,
-  maxAverageCoveredCharges: 0,
-  minAverageMedicarePayments: 0,
-  maxAverageMedicarePayments: 0,
+  state: 'al',
+  min_discharges: '0',
+  max_discharges: '5000',
+  min_average_covered_charges: '0',
+  max_average_covered_charges: '5000',
+  max_average_medicare_payments: '0',
+  min_average_medicare_payments: '5000',
 };
 
 export default function filter(state = initialState, { type, payload }) {
