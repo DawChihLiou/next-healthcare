@@ -20,5 +20,10 @@
       "src": "/(.*)",
       "dest": "/www/$1"
     }
-  ]
+  ],
+  "env": {
+    "MLAB_URL": "@mlab_url",
+    "MLAB_USERNAME": "@mlab_username",
+    "MLAB_PASSWORD": "@mlab_password"
+  }
 }
