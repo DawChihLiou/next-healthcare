@@ -1,11 +1,11 @@
 import Head from 'next/head';
+import { Provider } from 'react-redux';
 import App, { Container } from 'next/app';
 import withRedux from 'next-redux-wrapper';
-import { Provider } from 'react-redux';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Box from '@material-ui/core/Box';
-import MuiContainer from '@material-ui/core/Container';
 import { ThemeProvider } from '@material-ui/styles';
+
+import Box from '@material-ui/core/Box';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import configureStore from '../src/store';
 
@@ -39,11 +39,10 @@ class CustomApp extends App {
         <Provider store={store}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <MuiContainer maxWidth="lg">
-              <Box height="100vh">
-                <Component {...pageProps} />
-              </Box>
-            </MuiContainer>
+
+            <Box height="100vh">
+              <Component {...pageProps} />
+            </Box>
           </ThemeProvider>
         </Provider>
       </Container>

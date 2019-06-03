@@ -1,7 +1,8 @@
 import { useCallback } from 'react';
-import fetch from 'isomorphic-unfetch';
+
 import clsx from 'clsx';
 import Router from 'next/router';
+import { makeStyles } from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -10,9 +11,37 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import { GoMarkGithub } from 'react-icons/go';
 
-import { useStyles } from './hooks';
-
 import LogoIcon from './svg/logo.svg';
+
+const useStyles = makeStyles(theme => ({
+  rightIcon: {
+    marginLeft: theme.spacing(1),
+  },
+  fullHeight: {
+    height: '100%',
+  },
+  card: {
+    display: 'flex',
+    alignItems: 'center',
+    boxShadow: 'none',
+  },
+  content: {
+    flex: '1 0 auto',
+    paddingTop: 0,
+    paddingBottom: 0,
+    '&:last-child': {
+      paddingBottom: 0,
+    },
+  },
+  cover: {
+    width: '3em',
+    height: '3em',
+  },
+  borderRight: {
+    borderRight: `1px solid ${theme.palette.grey[400]}`,
+    paddingRight: '24px',
+  },
+}));
 
 function Login({ url }) {
   const classes = useStyles();

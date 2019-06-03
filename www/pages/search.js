@@ -1,25 +1,23 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import get from 'lodash/get';
 
-import ProviderList from '../src/components/provider-list';
 import { fetchProviders } from '../src/store/actions/provider';
+import { selectProvider } from '../src/selectors';
+
+import Filter from '../src/components/filter';
+import ProviderList from '../src/components/provider-list';
 
 Search.getInitialProps = async ({ req, store }) => {
-  // await store.dispatch(fetchProviders());
-  // const state = store.getState();
-  // return { providers: get(state, 'provider.list') };
+  await store.dispatch(fetchProviders());
+
+  const state = store.getState();
+  return { providers: get(state, 'provider.list') };
 };
 
 export default function Search() {
-  const dispatch = useDispatch();
-  const { list, isLoading, error } = useSelector(state => state.provider);
-
-  useEffect(() => {
-    if (!list) {
-      dispatch(fetchProviders());
-    }
-  }, [list]);
+  const { list, isLoading, error } = useSelector(selectProvider);
 
   if (isLoading) {
     return <CircularProgress />;
@@ -33,5 +31,10 @@ export default function Search() {
     return <p>no data</p>;
   }
 
-  return <ProviderList providers={list} />;
+  return (
+    <Box>
+      <Filter />
+      <ProviderList providers={list} />
+    </Box>
+  );
 }

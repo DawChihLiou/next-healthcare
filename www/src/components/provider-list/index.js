@@ -1,12 +1,18 @@
 import { useMemo } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
+
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
+import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 
 const useStyles = makeStyles(theme => ({
+  container: {
+    paddingTop: theme.spacing(2),
+    paddingLeft: theme.spacing(8),
+    paddingRight: theme.spacing(8),
+  },
   card: {
     marginBottom: theme.spacing(2),
   },
@@ -57,5 +63,5 @@ export default function ProviderList({ providers }) {
     ));
   }, [providers]);
 
-  return <Box>{list}</Box>;
+  return <Container className={classes.container}>{list}</Container>;
 }
