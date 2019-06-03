@@ -14,7 +14,8 @@ const notfound = (req, res) => {
 
 const findProviders = async (req, res) => {
   try {
-    const providers = await Providers.find({ providerState: 'AL' });
+    // TODO remove limit
+    const providers = await Providers.find({ providerState: 'AL' }).limit(20);
     send(res, 200, providers);
   } catch (error) {
     send(res, 500, error);
