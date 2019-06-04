@@ -1,8 +1,11 @@
+import dotenv from 'dotenv';
 import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/styles';
 import flush from 'styled-jsx/server';
 
 import theme from '../src/theme';
+
+dotenv.config();
 
 export default class CustomDocument extends Document {
   static async getInitialProps(ctx) {
