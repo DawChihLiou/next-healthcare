@@ -1,15 +1,13 @@
-import { useCallback } from 'react';
-
 import clsx from 'clsx';
+
 import Router from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
+import GoogleLogin from 'react-google-login';
 
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import { GoMarkGithub } from 'react-icons/go';
 
 import LogoIcon from './svg/logo.svg';
 
@@ -43,12 +41,21 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function Login({ url }) {
-  const classes = useStyles();
+function handleAuthRequest() {
+  console.log('auth requested');
+}
 
-  const handleLogin = useCallback(async () => {
-    Router.push('/search');
-  }, []);
+function handleAuthSuccess(user) {
+  console.log(user);
+  Router.push('/search');
+}
+
+function handleAuthFailure({ error, details }) {
+  console.log('auth failed');
+}
+
+export default function Login({ url }) {
+  const classes = useStyles();
 
   return (
     <Grid
@@ -68,15 +75,20 @@ function Login({ url }) {
             />
           </CardContent>
           <CardContent className={classes.content}>
-            <Button onClick={handleLogin}>
-              <span>Sign in with Github</span>
-              <GoMarkGithub size="1.5em" className={classes.rightIcon} />
-            </Button>
+            <GoogleLogin
+              clientId={
+                process.env.NODE_ENV === 'production'
+                  ? process.env.GOOGLE_CLIENT_ID
+                  : process.env.DEV_GOOGLE_CLIENT_ID
+              }
+              onRequest={handleAuthRequest}
+              onFailure={handleAuthFailure}
+              onSuccess={handleAuthSuccess}
+            />
+            ,
           </CardContent>
         </Card>
       </Grid>
     </Grid>
   );
 }
-
-export default Login;

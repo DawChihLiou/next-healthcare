@@ -6,8 +6,12 @@ import theme from '../src/theme';
 
 export default class CustomDocument extends Document {
   static async getInitialProps(ctx) {
-    // save host for composing api request endpoint
     process.serverHost = ctx.req.headers.host;
+
+    process.CLIENT_ID =
+      process.env.NODE_ENV === 'production'
+        ? process.env.GOOGLE_CLIENT_ID
+        : process.env.DEV_GOOGLE_CLIENT_ID;
 
     const sheets = new ServerStyleSheets();
     const originalRenderPage = ctx.renderPage;
@@ -21,7 +25,6 @@ export default class CustomDocument extends Document {
 
     return {
       ...initialProps,
-
       styles: (
         <>
           {sheets.getStyleElement()}
@@ -47,6 +50,7 @@ export default class CustomDocument extends Document {
           />
           <meta name="msapplication-TileColor" content="#da532c" />
           <meta name="theme-color" content="#ffffff" />
+
           <link
             rel="apple-touch-icon"
             sizes="180x180"
