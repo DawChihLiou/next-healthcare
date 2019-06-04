@@ -39,6 +39,9 @@ const useStyles = makeStyles(theme => ({
     borderRight: `1px solid ${theme.palette.grey[400]}`,
     paddingRight: '24px',
   },
+  loginButton: {
+    boxShadow: 'none !important',
+  },
 }));
 
 function handleAuthRequest() {
@@ -84,6 +87,7 @@ export default function Login({ url }) {
               onRequest={handleAuthRequest}
               onFailure={handleAuthFailure}
               onSuccess={handleAuthSuccess}
+              className={classes.loginButton}
             />
             ,
           </CardContent>
