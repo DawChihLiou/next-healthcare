@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/DawChihLiou/next-healthcare/compare/v0.1.1...v0.3.0) (2019-06-04)
+
+
+### Bug Fixes
+
+* **_document:** api host string ([#4](https://github.com/DawChihLiou/next-healthcare/issues/4)) ([aeb65e5](https://github.com/DawChihLiou/next-healthcare/commit/aeb65e5))
+* **filter:** wrap filter in AppBar for bigger viewport ([4655da8](https://github.com/DawChihLiou/next-healthcare/commit/4655da8))
+
+
+### Features
+
+* **provider api:** support return fields ([4695a65](https://github.com/DawChihLiou/next-healthcare/commit/4695a65))
+* **search:** add support for return fields to provider list ([ad94340](https://github.com/DawChihLiou/next-healthcare/commit/ad94340))
+
+
+
 ## [0.2.0](https://github.com/DawChihLiou/next-healthcare/compare/v0.1.1...v0.2.0) (2019-06-04)
 
 
