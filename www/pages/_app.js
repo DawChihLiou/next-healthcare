@@ -1,5 +1,7 @@
 import Head from 'next/head';
+import Router from 'next/router';
 import { Provider } from 'react-redux';
+import Cookies from 'universal-cookie';
 import App, { Container } from 'next/app';
 import withRedux from 'next-redux-wrapper';
 import { ThemeProvider } from '@material-ui/styles';
@@ -11,6 +13,8 @@ import configureStore from '../src/store';
 
 import theme from '../src/theme';
 
+const cookies = new Cookies();
+
 class CustomApp extends App {
   static async getInitialProps({ Component, ctx }) {
     const pageProps = Component.getInitialProps
@@ -19,11 +23,25 @@ class CustomApp extends App {
 
     return { pageProps };
   }
+
   componentDidMount() {
     const jssStyles = document.querySelector('#jss-server-side');
+    const user = cookies.get('nextcare');
 
     if (jssStyles) {
       jssStyles.parentNode.removeChild(jssStyles);
+    }
+
+    if (user.accessToken && window.location.pathname !== '/search') {
+      Router.push('/search');
+    }
+  }
+
+  componentDidUpdate() {
+    const user = cookies.get('nextcare');
+
+    if (user.accessToken && window.location.pathname !== '/search') {
+      Router.push('/search');
     }
   }
 

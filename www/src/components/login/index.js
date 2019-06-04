@@ -1,13 +1,18 @@
+import { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import clsx from 'clsx';
 
-import Router from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
 import GoogleLogin from 'react-google-login';
 
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+import { selectUser } from '../../selectors';
+import { requestAuth, requestAuthFailed, authorize } from '../../store/actions';
 
 import LogoIcon from './svg/logo.svg';
 
@@ -44,21 +49,23 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function handleAuthRequest() {
-  console.log('auth requested');
-}
-
-function handleAuthSuccess(user) {
-  console.log(user);
-  Router.push('/search');
-}
-
-function handleAuthFailure({ error, details }) {
-  console.log('auth failed');
-}
-
-export default function Login({ url }) {
+export default function Login() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+
+  const handleAuthRequest = useCallback(() => {
+    dispatch(requestAuth());
+  }, []);
+
+  const handleAuthSuccess = useCallback(user => {
+    const data = { ...user.profileObj, accessToken: user.accessToken };
+    dispatch(authorize(data));
+  }, []);
+
+  const handleAuthFailure = useCallback(({ details }) => {
+    dispatch(requestAuthFailed(details));
+  }, []);
 
   return (
     <Grid
@@ -78,18 +85,21 @@ export default function Login({ url }) {
             />
           </CardContent>
           <CardContent className={classes.content}>
-            <GoogleLogin
-              clientId={
-                process.env.NODE_ENV === 'production'
-                  ? process.env.GOOGLE_CLIENT_ID
-                  : process.env.DEV_GOOGLE_CLIENT_ID
-              }
-              onRequest={handleAuthRequest}
-              onFailure={handleAuthFailure}
-              onSuccess={handleAuthSuccess}
-              className={classes.loginButton}
-            />
-            ,
+            {user.isLoading ? (
+              <CircularProgress />
+            ) : (
+              <GoogleLogin
+                clientId={
+                  process.env.NODE_ENV === 'production'
+                    ? process.env.GOOGLE_CLIENT_ID
+                    : process.env.DEV_GOOGLE_CLIENT_ID
+                }
+                onRequest={handleAuthRequest}
+                onFailure={handleAuthFailure}
+                onSuccess={handleAuthSuccess}
+                className={classes.loginButton}
+              />
+            )}
           </CardContent>
         </Card>
       </Grid>
