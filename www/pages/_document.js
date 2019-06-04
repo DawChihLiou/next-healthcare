@@ -4,7 +4,33 @@ import flush from 'styled-jsx/server';
 
 import theme from '../src/theme';
 
-class CustomDocument extends Document {
+export default class CustomDocument extends Document {
+  static async getInitialProps(ctx) {
+    // save host for composing api request endpoint
+    process.serverHost = ctx.req.headers.host;
+
+    const sheets = new ServerStyleSheets();
+    const originalRenderPage = ctx.renderPage;
+
+    ctx.renderPage = () =>
+      originalRenderPage({
+        enhanceApp: App => props => sheets.collect(<App {...props} />),
+      });
+
+    const initialProps = await Document.getInitialProps(ctx);
+
+    return {
+      ...initialProps,
+
+      styles: (
+        <>
+          {sheets.getStyleElement()}
+          {flush() || null}
+        </>
+      ),
+    };
+  }
+
   render() {
     return (
       <html lang="en" dir="ltr">
@@ -53,28 +79,3 @@ class CustomDocument extends Document {
     );
   }
 }
-
-CustomDocument.getInitialProps = async ctx => {
-  const sheets = new ServerStyleSheets();
-  const originalRenderPage = ctx.renderPage;
-
-  ctx.renderPage = () =>
-    originalRenderPage({
-      enhanceApp: App => props => sheets.collect(<App {...props} />),
-    });
-
-  const initialProps = await Document.getInitialProps(ctx);
-
-  return {
-    ...initialProps,
-
-    styles: (
-      <>
-        {sheets.getStyleElement()}
-        {flush() || null}
-      </>
-    ),
-  };
-};
-
-export default CustomDocument;
