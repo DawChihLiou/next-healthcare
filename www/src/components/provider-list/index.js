@@ -6,15 +6,21 @@ import Card from '@material-ui/core/Card';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
+import LocationOnIcon from '@material-ui/icons/LocationOnOutlined';
 
 const useStyles = makeStyles(theme => ({
   container: {
     paddingTop: theme.spacing(2),
-    paddingLeft: theme.spacing(8),
-    paddingRight: theme.spacing(8),
   },
   card: {
     marginBottom: theme.spacing(2),
+  },
+  icon: {
+    marginRight: theme.spacing(0.5),
+    verticalAlign: 'text-bottom',
+  },
+  gridContainer: {
+    marginTop: theme.spacing(1),
   },
 }));
 
@@ -25,42 +31,106 @@ export default function ProviderList({ providers }) {
       return null;
     }
 
-    return providers.map(provider => (
-      <Card key={provider._id} className={classes.card}>
-        <CardContent>
-          <Typography
-            variant="body2"
-            component="p"
-            color="textSecondary"
-            gutterBottom
-          >{`DGR: ${provider['drgDefinition']}`}</Typography>
+    return providers.map(
+      ({
+        _id,
+        providerId,
+        providerName,
+        providerCity,
+        providerState,
+        drgDefinition,
+        providerZipCode,
+        totalDischarges,
+        averageTotalPayments,
+        providerStreetAddress,
+        averageCoveredCharges,
+        averageMedicarePayments,
+        hospitalReferralRegionDescription,
+      }) => (
+        <Card key={_id} className={classes.card}>
+          <CardContent>
+            {drgDefinition && (
+              <Typography
+                variant="body2"
+                color="primary"
+                gutterBottom
+              >{`DGR: ${drgDefinition}`}</Typography>
+            )}
 
-          <Typography variant="body1" component="p">{`${
-            provider['providerName']
-          }`}</Typography>
+            {providerName && (
+              <Typography
+                variant="h6"
+                gutterBottom
+              >{`${providerName}`}</Typography>
+            )}
 
-          <Typography
-            variant="body2"
-            component="p"
-            color="textSecondary"
-            gutterBottom
-          >{`${provider['providerStreetAddress']} ${
-            provider['providerCity']
-          }, ${provider['providerState']} ${provider['providerZipCode']}
-            `}</Typography>
-          <Grid container spacing={2}>
-            <Grid item>{`${provider['providerId']}`}</Grid>
-            <Grid item>{`${
-              provider['hospitalReferralRegionDescription']
-            }`}</Grid>
-            <Grid item>{`${provider['totalDischarges']}`}</Grid>
-            <Grid item>{`$${provider['averageCoveredCharges']}`}</Grid>
-            <Grid item>{`$${provider['averageTotalPayments']}`}</Grid>
-            <Grid item>{`$${provider['averageMedicarePayments']}`}</Grid>
-          </Grid>
-        </CardContent>
-      </Card>
-    ));
+            <Typography variant="body2" component="p" gutterBottom>
+              <LocationOnIcon className={classes.icon} />
+              {`${providerStreetAddress || ''} ${providerCity ||
+                ''}, ${providerState || ''} ${providerZipCode || ''}
+            `}
+            </Typography>
+
+            <Grid container spacing={2} className={classes.gridContainer}>
+              {providerId && (
+                <Grid item xs={6} sm={4} md={2}>
+                  <Typography variant="body2" color="textSecondary">
+                    Privider ID
+                  </Typography>
+                  <Typography>{`${providerId}`}</Typography>
+                </Grid>
+              )}
+              {hospitalReferralRegionDescription && (
+                <Grid item xs={6} sm={4} md={2}>
+                  <Typography variant="body2" color="textSecondary">
+                    Hospital Referral Region Description
+                  </Typography>
+                  <Typography>{`${hospitalReferralRegionDescription}`}</Typography>
+                </Grid>
+              )}
+              {totalDischarges && (
+                <Grid item xs={6} sm={4} md={2}>
+                  <Typography variant="body2" color="textSecondary">
+                    Total Discharges
+                  </Typography>
+                  <Typography>{`$${totalDischarges.toFixed(2)}`}</Typography>
+                </Grid>
+              )}
+              {averageCoveredCharges && (
+                <Grid item xs={6} sm={4} md={2}>
+                  <Typography variant="body2" color="textSecondary">
+                    Average Covered Charges
+                  </Typography>
+                  <Typography>{`$${averageCoveredCharges.toFixed(
+                    2
+                  )}`}</Typography>
+                </Grid>
+              )}
+              {averageTotalPayments && (
+                <Grid item xs={6} sm={4} md={2}>
+                  <Typography variant="body2" color="textSecondary">
+                    Average Total Payments
+                  </Typography>
+                  <Typography>{`$${averageTotalPayments.toFixed(
+                    2
+                  )}`}</Typography>
+                </Grid>
+              )}
+              {averageMedicarePayments && (
+                <Grid item xs={6} sm={4} md={2}>
+                  <Typography variant="body2" color="textSecondary">
+                    Average Medicare Payments
+                  </Typography>
+                  <Typography>{`$${averageMedicarePayments.toFixed(
+                    2
+                  )}`}</Typography>
+                </Grid>
+              )}
+            </Grid>
+          </CardContent>
+        </Card>
+      )
+    );
   }, [providers]);
 
   return <Container className={classes.container}>{list}</Container>;

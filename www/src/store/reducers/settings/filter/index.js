@@ -2,6 +2,7 @@ const initialState = [
   {
     name: 'state',
     display: 'State',
+    type: 'select',
     options: [
       { name: 'Alabama', value: 'al' },
       { name: 'Alaska', value: 'ak' },
@@ -53,6 +54,28 @@ const initialState = [
       { name: 'West Virginia', value: 'wv' },
       { name: 'Wisconsin', value: 'wi' },
       { name: 'Wyoming', value: 'wy' },
+    ],
+  },
+  {
+    name: 'return_fields',
+    display: 'Return Fields',
+    type: 'multiple-select',
+    options: [
+      { name: 'Provider ID', value: 'providerId' },
+      { name: 'Provider Name', value: 'providerName' },
+      { name: 'DRG Definition', value: 'drgDefinition' },
+      { name: 'Provider Street Address', value: 'providerStreetAddress' },
+      { name: 'Provider City', value: 'providerCity' },
+      { name: 'Provider State', value: 'providerState' },
+      { name: 'Provider Zip Code', value: 'providerZipCode' },
+      {
+        name: 'Hospital Referral Region Description',
+        value: 'hospitalReferralRegionDescription',
+      },
+      { name: 'Total Discharges', value: 'totalDischarges' },
+      { name: 'Average Covered Charges', value: 'averageCoveredCharges' },
+      { name: 'Average Total Payments', value: 'averageTotalPayments' },
+      { name: 'Average Medicare Payments', value: 'averageMedicarePayments' },
     ],
   },
   { name: 'min_discharges', display: 'Min Discharges', type: 'number' },

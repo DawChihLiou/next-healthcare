@@ -21,13 +21,7 @@ import ProviderList from '../src/components/provider-list';
 
 const useStyles = makeStyles(theme => ({
   container: {
-    position: 'sticky',
-    top: 0,
-    backgroundColor: theme.palette.background.paper,
-    borderRadius: theme.shape.borderRadius,
-    marginBottom: theme.spacing(2),
-    paddingBottom: theme.spacing(2),
-    borderBottom: `1px solid ${theme.palette.background.default}`,
+    padding: 0,
   },
   fab: {
     position: 'fixed',
@@ -92,7 +86,7 @@ export default function Search() {
   return (
     <Box>
       <Hidden xsDown>
-        <Container className={classes.container}>
+        <Container maxWidth={false} className={classes.container}>
           <Filter done={toggleDrawer(false)} />
         </Container>
       </Hidden>
