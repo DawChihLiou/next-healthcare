@@ -56,28 +56,6 @@ const initialState = [
       { name: 'Wyoming', value: 'wy' },
     ],
   },
-  { name: 'min_discharges', display: 'Min Discharges', type: 'number' },
-  { name: 'max_discharges', display: 'Max Discharges' },
-  {
-    name: 'min_average_covered_charges',
-    display: 'Min Average Covered Charges',
-    type: 'number',
-  },
-  {
-    name: 'max_average_covered_charges',
-    display: 'Max Average Covered charges',
-    type: 'number',
-  },
-  {
-    name: 'min_average_medicare_payments',
-    display: 'Min Average Medicare Payments',
-    type: 'number',
-  },
-  {
-    name: 'max_average_medicare_payments',
-    display: 'Max Average Medicare Payments',
-    type: 'number',
-  },
   {
     name: 'return_fields',
     display: 'Return Fields',
@@ -99,6 +77,28 @@ const initialState = [
       { name: 'Average Total Payments', value: 'averageTotalPayments' },
       { name: 'Average Medicare Payments', value: 'averageMedicarePayments' },
     ],
+  },
+  { name: 'min_discharges', display: 'Min Discharges', type: 'number' },
+  { name: 'max_discharges', display: 'Max Discharges' },
+  {
+    name: 'min_average_covered_charges',
+    display: 'Min Average Covered Charges',
+    type: 'number',
+  },
+  {
+    name: 'max_average_covered_charges',
+    display: 'Max Average Covered charges',
+    type: 'number',
+  },
+  {
+    name: 'min_average_medicare_payments',
+    display: 'Min Average Medicare Payments',
+    type: 'number',
+  },
+  {
+    name: 'max_average_medicare_payments',
+    display: 'Max Average Medicare Payments',
+    type: 'number',
   },
 ];
 

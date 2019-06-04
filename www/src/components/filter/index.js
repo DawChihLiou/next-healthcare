@@ -12,20 +12,25 @@ import toString from 'lodash/toString';
 import findIndex from 'lodash/findIndex';
 
 import Grid from '@material-ui/core/Grid';
+import Slide from '@material-ui/core/Slide';
+import AppBar from '@material-ui/core/AppBar';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Hidden from '@material-ui/core/Hidden';
 import MenuItem from '@material-ui/core/MenuItem';
+import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
 import { fetchProviders } from '../../../src/store/actions/provider';
 import { selectFilterSettings, selectFilter } from '../../../src/selectors';
 
 const useStyles = makeStyles(theme => ({
   gridContainer: {
-    padding: theme.spacing(2),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(1),
   },
   item: {
     textAlign: 'center',
@@ -40,7 +45,7 @@ const useStyles = makeStyles(theme => ({
   right: {
     textAlign: 'right',
     marginRight: theme.spacing(1),
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(1),
   },
   centered: {
     textAlign: 'center',
@@ -51,7 +56,19 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Filter({ done }) {
+function HideOnScroll(props) {
+  const { children, window } = props;
+  const trigger = useScrollTrigger({ target: window ? window() : undefined });
+
+  return (
+    <Slide appear={false} direction="down" in={!trigger}>
+      {children}
+    </Slide>
+  );
+}
+
+export default function Filter(props) {
+  const { done } = props;
   const classes = useStyles();
   const dispatch = useDispatch();
   const settings = useSelector(selectFilterSettings);
@@ -166,29 +183,37 @@ export default function Filter({ done }) {
   }, [settings, values, returnFields]);
 
   return (
-    <Grid container className={classes.gridContainer}>
-      {filters}
-      <Hidden smUp>
-        <Grid item xs={12} className={classes.centered}>
-          <Button
-            size="large"
-            color="primary"
-            variant="contained"
-            onClick={handleApply}
-            className={classes.extended}
-          >
-            Apply
-          </Button>
-        </Grid>
-      </Hidden>
-
+    <>
       <Hidden xsDown>
-        <Grid item xs={12} className={classes.right}>
-          <Button color="primary" onClick={handleApply}>
-            Apply
-          </Button>
+        <HideOnScroll {...props}>
+          <AppBar color="primary" position="relative">
+            <Container>
+              <Grid container className={classes.gridContainer}>
+                {filters}
+                <Grid item xs={12} className={classes.right}>
+                  <Button onClick={handleApply}>Apply</Button>
+                </Grid>
+              </Grid>
+            </Container>
+          </AppBar>
+        </HideOnScroll>
+      </Hidden>
+      <Hidden smUp>
+        <Grid container className={classes.gridContainer}>
+          {filters}
+          <Grid item xs={12} className={classes.centered}>
+            <Button
+              size="large"
+              color="primary"
+              variant="contained"
+              onClick={handleApply}
+              className={classes.extended}
+            >
+              Apply
+            </Button>
+          </Grid>
         </Grid>
       </Hidden>
-    </Grid>
+    </>
   );
 }

@@ -11,8 +11,6 @@ import LocationOnIcon from '@material-ui/icons/LocationOnOutlined';
 const useStyles = makeStyles(theme => ({
   container: {
     paddingTop: theme.spacing(2),
-    paddingLeft: theme.spacing(8),
-    paddingRight: theme.spacing(8),
   },
   card: {
     marginBottom: theme.spacing(2),
