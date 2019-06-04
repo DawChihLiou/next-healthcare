@@ -8,11 +8,6 @@ export default class CustomDocument extends Document {
   static async getInitialProps(ctx) {
     process.serverHost = ctx.req.headers.host;
 
-    process.CLIENT_ID =
-      process.env.NODE_ENV === 'production'
-        ? '452779546633-0eeo9gust5mtfe7f2oku917rhlh4hvs4.apps.googleusercontent.com'
-        : '452779546633-mu0vkejvkapbdhbnmcnhs1itbroft6bc.apps.googleusercontent.com';
-
     const sheets = new ServerStyleSheets();
     const originalRenderPage = ctx.renderPage;
 

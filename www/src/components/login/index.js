@@ -91,8 +91,8 @@ export default function Login() {
               <GoogleLogin
                 clientId={
                   process.env.NODE_ENV === 'production'
-                    ? process.env.GOOGLE_CLIENT_ID
-                    : process.env.DEV_GOOGLE_CLIENT_ID
+                    ? '452779546633-0eeo9gust5mtfe7f2oku917rhlh4hvs4.apps.googleusercontent.com'
+                    : '452779546633-mu0vkejvkapbdhbnmcnhs1itbroft6bc.apps.googleusercontent.com'
                 }
                 onRequest={handleAuthRequest}
                 onFailure={handleAuthFailure}
