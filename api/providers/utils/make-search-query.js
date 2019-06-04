@@ -1,4 +1,4 @@
-const { isNaN, isEmpty, nth } = require('lodash');
+const { isNaN, isEmpty } = require('lodash');
 
 module.exports = params => {
   const {
@@ -12,8 +12,7 @@ module.exports = params => {
     return_fields,
   } = params;
 
-  const select = return_fields ? return_fields.replace(',', ' ') : null;
-
+  const select = return_fields ? return_fields.replace(/,/g, ' ') : null;
   const where = {};
 
   if (state) {

@@ -23,11 +23,10 @@ const useStyles = makeStyles(theme => ({
   container: {
     position: 'sticky',
     top: 0,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
     borderRadius: theme.shape.borderRadius,
     marginBottom: theme.spacing(2),
     paddingBottom: theme.spacing(2),
-    borderBottom: `1px solid ${theme.palette.background.default}`,
   },
   fab: {
     position: 'fixed',
@@ -92,8 +91,10 @@ export default function Search() {
   return (
     <Box>
       <Hidden xsDown>
-        <Container className={classes.container}>
-          <Filter done={toggleDrawer(false)} />
+        <Container maxWidth={false} className={classes.container}>
+          <Container>
+            <Filter done={toggleDrawer(false)} />
+          </Container>
         </Container>
       </Hidden>
 

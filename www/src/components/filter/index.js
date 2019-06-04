@@ -1,11 +1,15 @@
-import { useMemo, useState, useCallback } from 'react';
+import { useMemo, useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
+import nth from 'lodash/nth';
+
+import uniq from 'lodash/uniq';
 import flow from 'lodash/flow';
 import isEmpty from 'lodash/isEmpty';
 import isNumber from 'lodash/isNumber';
 import toNumber from 'lodash/toNumber';
 import toString from 'lodash/toString';
+import findIndex from 'lodash/findIndex';
 
 import Grid from '@material-ui/core/Grid';
 import Select from '@material-ui/core/Select';
@@ -27,7 +31,7 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
   },
   formControl: {
-    minWidth: `calc(100% - ${theme.spacing(4)}px)`,
+    width: `calc(100% - ${theme.spacing(4)}px)`,
     marginTop: theme.spacing(1),
   },
   select: {
@@ -36,9 +40,11 @@ const useStyles = makeStyles(theme => ({
   right: {
     textAlign: 'right',
     marginRight: theme.spacing(1),
+    marginTop: theme.spacing(2),
   },
   centered: {
     textAlign: 'center',
+    marginTop: theme.spacing(2),
   },
   extended: {
     minWidth: `calc(100% - ${theme.spacing(4)}px)`,
@@ -53,6 +59,22 @@ export default function Filter({ done }) {
   const [values, setValues] = useState({
     ...filter,
   });
+  const [returnFields, setReturnields] = useState([]);
+
+  useEffect(() => {
+    const index = findIndex(
+      settings,
+      setting => setting.name === 'return_fields'
+    );
+    const found = nth(settings, index);
+
+    if (!found) {
+      return;
+    }
+
+    const fields = found.options.map(op => op.value);
+    setReturnields(fields);
+  }, [settings]);
 
   const apply = useCallback(payload => dispatch(fetchProviders(payload)), []);
 
@@ -78,58 +100,71 @@ export default function Filter({ done }) {
   }, []);
 
   const handleApply = useCallback(() => {
-    apply(values);
-    done();
-  }, [values]);
+    const payload = { ...values, return_fields: uniq(returnFields).join(',') };
 
-  const filters = useMemo(
-    () =>
-      settings.map(({ name, display, options, type }) => {
-        return (
-          <Grid
-            key={`filter-${name}`}
-            item
-            xs={12}
-            sm={6}
-            md={4}
-            className={classes.item}
-          >
-            <FormControl className={classes.formControl}>
-              {options ? (
-                <>
-                  <InputLabel htmlFor={name}>{display}</InputLabel>
-                  <Select
-                    value={values[name]}
-                    inputProps={{
-                      name: 'state',
-                      id: 'state',
-                    }}
-                    onChange={handleChange}
-                    className={classes.select}
-                  >
-                    {options.map(({ value, name }) => (
-                      <MenuItem key={`filter-option-${value}`} value={value}>
-                        {name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </>
-              ) : (
-                <TextField
-                  value={`${values[name]}`}
-                  id={name}
-                  name={name}
-                  label={display}
-                  onChange={handleChange}
-                  type={type}
-                />
-              )}
-            </FormControl>
-          </Grid>
-        );
-      }),
-    [values]
-  );
+    apply(payload);
+    done();
+  }, [values, returnFields]);
+
+  const handleChangeMultiple = useCallback(e => {
+    const { value } = e.target;
+    setReturnields(value);
+  }, []);
+
+  const filters = useMemo(() => {
+    return settings.map(({ name, display, options, type }) => {
+      return (
+        <Grid
+          key={`filter-${name}`}
+          item
+          xs={12}
+          sm={6}
+          md={4}
+          className={classes.item}
+        >
+          <FormControl className={classes.formControl}>
+            {options ? (
+              <>
+                <InputLabel htmlFor={name}>{display}</InputLabel>
+                <Select
+                  multiple={type === 'multiple-select'}
+                  value={
+                    type === 'multiple-select' ? returnFields : values[name]
+                  }
+                  inputProps={{
+                    name,
+                    id: name,
+                  }}
+                  onChange={
+                    type === 'multiple-select'
+                      ? handleChangeMultiple
+                      : handleChange
+                  }
+                  className={classes.select}
+                >
+                  {options.map(({ value, name }) => (
+                    <MenuItem key={`filter-option-${value}`} value={value}>
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </>
+            ) : (
+              <TextField
+                value={`${values[name]}`}
+                id={name}
+                name={name}
+                label={display}
+                onChange={handleChange}
+                type={type}
+              />
+            )}
+          </FormControl>
+        </Grid>
+      );
+    });
+  }, [settings, values, returnFields]);
+
   return (
     <Grid container className={classes.gridContainer}>
       {filters}

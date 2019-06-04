@@ -15,8 +15,8 @@ connectDb();
 const findProviders = async (req, res) => {
   try {
     const { where, select } = makeQuery(query(req));
-
     const providers = await Providers.find(where, select);
+
     send(res, 200, providers);
   } catch (error) {
     send(res, 500, error);
