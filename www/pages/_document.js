@@ -1,11 +1,8 @@
-import dotenv from 'dotenv';
 import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/styles';
 import flush from 'styled-jsx/server';
 
 import theme from '../src/theme';
-
-dotenv.config();
 
 export default class CustomDocument extends Document {
   static async getInitialProps(ctx) {
@@ -13,8 +10,8 @@ export default class CustomDocument extends Document {
 
     process.CLIENT_ID =
       process.env.NODE_ENV === 'production'
-        ? process.env.GOOGLE_CLIENT_ID
-        : process.env.DEV_GOOGLE_CLIENT_ID;
+        ? '452779546633-0eeo9gust5mtfe7f2oku917rhlh4hvs4.apps.googleusercontent.com'
+        : '452779546633-mu0vkejvkapbdhbnmcnhs1itbroft6bc.apps.googleusercontent.com';
 
     const sheets = new ServerStyleSheets();
     const originalRenderPage = ctx.renderPage;
