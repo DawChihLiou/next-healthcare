@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-
-import { selectUser } from '../src/selectors';
+import get from 'lodash/get';
+import Router from 'next/router';
+import Cookies from 'universal-cookie';
 
 import Login from '../src/components/login';
+
+const cookies = new Cookies();
 
 Index.getInitialProps = ({ req, store }) => {
   const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
@@ -16,10 +18,9 @@ Index.getInitialProps = ({ req, store }) => {
 };
 
 export default function Index({ authEndpoint }) {
-  const { accessToken } = useSelector(selectUser);
-
   useEffect(() => {
-    if (accessToken) {
+    const user = cookies.get('nextcare');
+    if (get(user, 'accessToken')) {
       Router.push('/search');
     }
   }, []);
