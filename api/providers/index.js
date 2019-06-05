@@ -16,7 +16,7 @@ connectDb();
 
 const parseAuthorization = req => {
   if (!req.headers.authorization) {
-    return;
+    return '';
   }
 
   const header = req.headers.authorization.split(' ');
@@ -24,6 +24,8 @@ const parseAuthorization = req => {
   if (nth(header).toLowerCase() === 'bearer') {
     return nth(header, 1);
   }
+
+  return '';
 };
 
 const findProviders = async (req, res) => {

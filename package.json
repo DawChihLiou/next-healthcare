@@ -1,6 +1,6 @@
 {
   "name": "next-healthcare",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "private": false,
   "license": "Apache License 2.0",
   "scripts": {
@@ -10,11 +10,20 @@
     "postinstall": "cd api && npm i && cd ../www && npm i ",
     "release": "standard-version",
     "release:dry": "npm run release -- --dry-run",
-    "cz": "git-cz"
+    "cz": "git-cz",
+    "lint": "eslint --fix --color www api",
+    "lint:watch": "esw -w --fix --color www api",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix --color www api",
+      "git add"
+    ]
   },
   "husky": {
     "hooks": {
-      "prepare-commit-msg": "exec < /dev/tty && yarn cz --hook"
+      "pre-commit": "lint-staged"
     }
   },
   "config": {
@@ -23,9 +32,20 @@
     }
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.1",
     "commitizen": "^3.1.1",
     "cz-conventional-changelog": "^2.1.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-loader": "^2.1.2",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.13.0",
+    "eslint-watch": "^5.1.2",
     "husky": "^2.3.0",
+    "lint-staged": "^8.1.7",
     "now-lambda-runner": "^4.0.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.17.1",

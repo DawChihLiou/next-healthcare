@@ -29,8 +29,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
-import { fetchProviders } from '../../../src/store/actions/provider';
-import { selectFilter, selectUser } from '../../../src/selectors';
+import { fetchProviders } from '../../store/actions/provider';
+import { selectFilter, selectUser } from '../../selectors';
 
 const useStyles = makeStyles(theme => ({
   gridContainer: {
@@ -181,9 +181,9 @@ export default function Filter(props) {
                   }
                   className={classes.select}
                 >
-                  {options.map(({ value, name }) => (
+                  {options.map(({ value, name: displayName }) => (
                     <MenuItem key={`filter-option-${value}`} value={value}>
-                      {name}
+                      {displayName}
                     </MenuItem>
                   ))}
                 </Select>

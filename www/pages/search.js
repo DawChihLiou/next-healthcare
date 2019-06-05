@@ -49,14 +49,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-Search.getInitialProps = async ({ req, store }) => {
-  const state = store.getState();
-  return {
-    settings: selectFilterSettings(state),
-  };
-};
-
-export default function Search({ settings }) {
+function Search({ settings }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { list, isLoading, error } = useSelector(selectProvider);
@@ -83,7 +76,6 @@ export default function Search({ settings }) {
   };
 
   const handleLogout = useCallback(() => {
-    const cookies = new Cookies();
     cookies.remove('nextcare', { path: '/' });
     Router.push('/');
   }, []);
@@ -100,7 +92,7 @@ export default function Search({ settings }) {
     if (error) {
       return (
         <Grid container className={classes.centeredContainer}>
-          <p>There's an error. Please try again.</p>
+          <p>There is an error. Please try again.</p>
         </Grid>
       );
     }
@@ -166,3 +158,12 @@ export default function Search({ settings }) {
     </Box>
   );
 }
+
+Search.getInitialProps = async ({ store }) => {
+  const state = store.getState();
+  return {
+    settings: selectFilterSettings(state),
+  };
+};
+
+export default Search;
