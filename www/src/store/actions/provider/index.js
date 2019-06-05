@@ -28,7 +28,7 @@ function makeRoute(url, options) {
   return `${url}?${query}`;
 }
 
-export const fetchProviders = payload => async dispatch => {
+export const fetchProviders = (payload, token = '') => async dispatch => {
   const url = makeRoute(`${getRootUrl()}/api/providers`, payload);
 
   dispatch(setFilter(payload));
@@ -37,10 +37,19 @@ export const fetchProviders = payload => async dispatch => {
   try {
     const response = await fetch(url, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `bearer ${token}`,
+      },
     });
-    const data = await response.json();
-    dispatch(fetchProvidersSuccessful(data));
+    const { data, error } = await response.json();
+    if (error) {
+      dispatch(fetchProvidersFailed(error));
+    }
+
+    if (data) {
+      dispatch(fetchProvidersSuccessful(data));
+    }
   } catch (error) {
     dispatch(fetchProvidersFailed(error));
   }

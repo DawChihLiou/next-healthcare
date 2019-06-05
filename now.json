@@ -24,6 +24,8 @@
   "env": {
     "MLAB_URL": "@mlab_url",
     "MLAB_USERNAME": "@mlab_username",
-    "MLAB_PASSWORD": "@mlab_password"
+    "MLAB_PASSWORD": "@mlab_password",
+    "GOOGLE_CLIENT_ID": "452779546633-0eeo9gust5mtfe7f2oku917rhlh4hvs4.apps.googleusercontent.com",
+    "DEV_GOOGLE_CLIENT_ID": "452779546633-mu0vkejvkapbdhbnmcnhs1itbroft6bc.apps.googleusercontent.com"
   }
 }

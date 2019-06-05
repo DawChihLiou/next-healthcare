@@ -1,15 +1,18 @@
 import { useCallback } from 'react';
-
+import { useSelector, useDispatch } from 'react-redux';
 import clsx from 'clsx';
-import Router from 'next/router';
-import { makeStyles } from '@material-ui/core/styles';
 
-import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import GoogleLogin from 'react-google-login';
+
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import { GoMarkGithub } from 'react-icons/go';
+import CardContent from '@material-ui/core/CardContent';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+import { selectUser } from '../../selectors';
+import { requestAuth, requestAuthFailed, authorize } from '../../store/actions';
 
 import LogoIcon from './svg/logo.svg';
 
@@ -24,9 +27,11 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     boxShadow: 'none',
+    flexWrap: 'wrap',
   },
   content: {
     flex: '1 0 auto',
+    textAlign: 'center',
     paddingTop: 0,
     paddingBottom: 0,
     '&:last-child': {
@@ -36,18 +41,36 @@ const useStyles = makeStyles(theme => ({
   cover: {
     width: '3em',
     height: '3em',
+    margin: '0 auto',
   },
   borderRight: {
     borderRight: `1px solid ${theme.palette.grey[400]}`,
     paddingRight: '24px',
   },
+  loginButton: {
+    boxShadow: 'none !important',
+  },
+  loader: {
+    margin: theme.spacing(1.5),
+  },
 }));
 
-function Login({ url }) {
+export default function Login() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
 
-  const handleLogin = useCallback(async () => {
-    Router.push('/search');
+  const handleAuthRequest = useCallback(() => {
+    dispatch(requestAuth());
+  }, []);
+
+  const handleAuthSuccess = useCallback(user => {
+    const data = { ...user.profileObj, accessToken: user.accessToken };
+    dispatch(authorize(data));
+  }, []);
+
+  const handleAuthFailure = useCallback(({ details }) => {
+    dispatch(requestAuthFailed(details));
   }, []);
 
   return (
@@ -68,15 +91,24 @@ function Login({ url }) {
             />
           </CardContent>
           <CardContent className={classes.content}>
-            <Button onClick={handleLogin}>
-              <span>Sign in with Github</span>
-              <GoMarkGithub size="1.5em" className={classes.rightIcon} />
-            </Button>
+            {user.isLoading ? (
+              <CircularProgress className={classes.loader} />
+            ) : (
+              <GoogleLogin
+                clientId={
+                  process.env.NODE_ENV === 'production'
+                    ? '452779546633-0eeo9gust5mtfe7f2oku917rhlh4hvs4.apps.googleusercontent.com'
+                    : '452779546633-mu0vkejvkapbdhbnmcnhs1itbroft6bc.apps.googleusercontent.com'
+                }
+                onRequest={handleAuthRequest}
+                onFailure={handleAuthFailure}
+                onSuccess={handleAuthSuccess}
+                className={classes.loginButton}
+              />
+            )}
           </CardContent>
         </Card>
       </Grid>
     </Grid>
   );
 }
-
-export default Login;
