@@ -6,7 +6,7 @@ import noop from 'lodash/noop';
 import Cookies from 'universal-cookie';
 import { makeStyles } from '@material-ui/core/styles';
 import { GoogleLogout } from 'react-google-login';
-import Router from 'next/Router';
+import Router from 'next/router';
 
 import Fab from '@material-ui/core/Fab';
 import Box from '@material-ui/core/Box';
