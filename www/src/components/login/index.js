@@ -14,8 +14,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { selectUser } from '../../selectors';
 import { requestAuth, requestAuthFailed, authorize } from '../../store/actions';
 
-import LogoIcon from './svg/logo.svg';
-
 const useStyles = makeStyles(theme => ({
   rightIcon: {
     marginLeft: theme.spacing(1),
@@ -85,7 +83,7 @@ export default function Login() {
         <Card className={classes.card}>
           <CardContent className={clsx(classes.content, classes.borderRight)}>
             <CardMedia
-              image={LogoIcon}
+              image="static/logo.svg"
               title="Next Healthcare"
               className={classes.cover}
             />

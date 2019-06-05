@@ -3,7 +3,7 @@ import get from 'lodash/get';
 import Router from 'next/router';
 import Cookies from 'universal-cookie';
 
-import Login from '../src/components/login';
+import Login from '../../src/components/login';
 
 const cookies = new Cookies();
 

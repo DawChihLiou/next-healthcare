@@ -21,12 +21,12 @@ import {
   selectProvider,
   selectFilterSettings,
   selectFilter,
-} from '../src/selectors';
-import { setUser } from '../src/store/actions';
-import { fetchProviders } from '../src/store/actions/provider';
+} from '../../src/selectors';
+import { setUser } from '../../src/store/actions';
+import { fetchProviders } from '../../src/store/actions/provider';
 
-import Filter from '../src/components/filter';
-import ProviderList from '../src/components/provider-list';
+import Filter from '../../src/components/filter';
+import ProviderList from '../../src/components/provider-list';
 
 const cookies = new Cookies();
 
