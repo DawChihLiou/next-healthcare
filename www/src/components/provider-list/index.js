@@ -24,13 +24,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function ProviderList({ providers }) {
+export default function ProviderList({ providers = [] }) {
   const classes = useStyles();
   const list = useMemo(() => {
-    if (!providers) {
-      return null;
-    }
-
     return providers.map(
       ({
         _id,

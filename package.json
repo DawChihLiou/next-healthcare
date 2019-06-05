@@ -14,8 +14,8 @@
     "lint": "eslint --fix --color www api",
     "lint:watch": "esw -w --fix --color www api",
     "lint-staged": "lint-staged",
-    "test": "jest --coverage",
-    "test:watch": "jest --watch"
+    "test": "cd www && npm run test",
+    "test:watch": "cd www && npm run test:watch"
   },
   "lint-staged": {
     "*.js": [
@@ -35,6 +35,7 @@
     }
   },
   "devDependencies": {
+    "@babel/core": "^7.4.5",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.8.0",
     "commitizen": "^3.1.1",

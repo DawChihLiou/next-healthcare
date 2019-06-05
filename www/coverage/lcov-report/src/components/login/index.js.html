@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">30.77% </span>
+        <span class="strong">69.23% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>4/13</span>
+        <span class='fraction'>9/13</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">50% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/4</span>
+        <span class='fraction'>2/4</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">40% </span>
@@ -35,16 +35,16 @@
         <span class='fraction'>2/5</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">25% </span>
+        <span class="strong">66.67% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>3/12</span>
+        <span class='fraction'>8/12</span>
       </div>
     </div>
     <p class="quiet">
       Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
     </p>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line medium'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -158,11 +158,7 @@
 <a name='L110'></a><a href='#L110'>110</a>
 <a name='L111'></a><a href='#L111'>111</a>
 <a name='L112'></a><a href='#L112'>112</a>
-<a name='L113'></a><a href='#L113'>113</a>
-<a name='L114'></a><a href='#L114'>114</a>
-<a name='L115'></a><a href='#L115'>115</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L113'></a><a href='#L113'>113</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -218,24 +214,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -290,8 +286,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { selectUser } from '../../selectors';
 import { requestAuth, requestAuthFailed, authorize } from '../../store/actions';
 &nbsp;
-import LogoIcon from './svg/logo.svg';
-&nbsp;
 const useStyles = makeStyles(theme =&gt; ({
   rightIcon: {
     marginLeft: theme.spacing(1),
@@ -334,22 +328,22 @@ const useStyles = makeStyles(theme =&gt; ({
 export default function Login() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const user = <span class="cstat-no" title="statement not covered" >useSelector(selectUser);</span>
+  const user = useSelector(selectUser);
 &nbsp;
-  const handleAuthRequest = <span class="cstat-no" title="statement not covered" >useCallback(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+  const handleAuthRequest = useCallback(<span class="fstat-no" title="function not covered" >()</span> =&gt; {
 <span class="cstat-no" title="statement not covered" >    dispatch(requestAuth());</span>
   }, []);
 &nbsp;
-  const handleAuthSuccess = <span class="cstat-no" title="statement not covered" >useCallback(<span class="fstat-no" title="function not covered" >au</span>th =&gt; {</span>
+  const handleAuthSuccess = useCallback(<span class="fstat-no" title="function not covered" >au</span>th =&gt; {
     const data = <span class="cstat-no" title="statement not covered" >{ ...auth.profileObj, accessToken: auth.accessToken };</span>
 <span class="cstat-no" title="statement not covered" >    dispatch(authorize(data));</span>
   }, []);
 &nbsp;
-  const handleAuthFailure = <span class="cstat-no" title="statement not covered" >useCallback(<span class="fstat-no" title="function not covered" >({</span> details }) =&gt; {</span>
+  const handleAuthFailure = useCallback(<span class="fstat-no" title="function not covered" >({</span> details }) =&gt; {
 <span class="cstat-no" title="statement not covered" >    dispatch(requestAuthFailed(details));</span>
   }, []);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
+  return (
     &lt;Grid
       container
       direction="row"
@@ -361,19 +355,19 @@ export default function Login() {
         &lt;Card className={classes.card}&gt;
           &lt;CardContent className={clsx(classes.content, classes.borderRight)}&gt;
             &lt;CardMedia
-              image={LogoIcon}
+              image="static/logo.svg"
               title="Next Healthcare"
               className={classes.cover}
             /&gt;
           &lt;/CardContent&gt;
           &lt;CardContent className={classes.content}&gt;
             {user.isLoading ? (
-              &lt;CircularProgress className={classes.loader} /&gt;
+<span class="branch-0 cbranch-no" title="branch not covered" >              &lt;CircularProgress className={classes.loader} /&gt;</span>
             ) : (
               &lt;GoogleLogin
                 clientId={
                   process.env.NODE_ENV === 'production'
-                    ? '452779546633-d4b7j3lh7qstqvqrnprb8k22l6hg1c0c.apps.googleusercontent.com'
+                    ? <span class="branch-0 cbranch-no" title="branch not covered" >'452779546633-d4b7j3lh7qstqvqrnprb8k22l6hg1c0c.apps.googleusercontent.com'</span>
                     : '452779546633-mu0vkejvkapbdhbnmcnhs1itbroft6bc.apps.googleusercontent.com'
                 }
                 onRequest={handleAuthRequest}
@@ -394,7 +388,7 @@ export default function Login() {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jun 05 2019 17:13:21 GMT+0200 (Central European Summer Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jun 05 2019 17:33:45 GMT+0200 (Central European Summer Time)
 </div>
 </div>
 <script src="../../../prettify.js"></script>
