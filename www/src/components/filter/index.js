@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { GoogleLogout } from 'react-google-login';
 import Cookies from 'universal-cookie';
 import nth from 'lodash/nth';
-import Router from 'next/Router';
+import Router from 'next/router';
 
 import get from 'lodash/get';
 import noop from 'lodash/noop';
