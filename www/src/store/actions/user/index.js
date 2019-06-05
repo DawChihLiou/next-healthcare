@@ -27,12 +27,11 @@ export const authorize = payload => async dispatch => {
   dispatch(requestAuth());
 
   try {
-    const response = await fetch(url, {
+    await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    const json = await response.json();
 
     dispatch(requestAuthSuccessful(payload));
     Router.push('/search');

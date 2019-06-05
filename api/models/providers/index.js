@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
-const schema = mongoose.Schema;
 
-const Provider = new schema({
+const { Schema } = mongoose;
+
+const Provider = new Schema({
   drgDefinition: String,
   providerId: Number,
   providerName: String,

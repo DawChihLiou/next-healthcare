@@ -64,8 +64,8 @@ export default function Login() {
     dispatch(requestAuth());
   }, []);
 
-  const handleAuthSuccess = useCallback(user => {
-    const data = { ...user.profileObj, accessToken: user.accessToken };
+  const handleAuthSuccess = useCallback(auth => {
+    const data = { ...auth.profileObj, accessToken: auth.accessToken };
     dispatch(authorize(data));
   }, []);
 
