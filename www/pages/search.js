@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import { makeStyles } from '@material-ui/core/styles';
-import Cookies from 'universal-cookie';
 
 import Fab from '@material-ui/core/Fab';
 import Box from '@material-ui/core/Box';
@@ -19,8 +18,6 @@ import { fetchProviders } from '../src/store/actions/provider';
 
 import Filter from '../src/components/filter';
 import ProviderList from '../src/components/provider-list';
-
-const cookies = new Cookies();
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -39,7 +36,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 Search.getInitialProps = async ({ req, store }) => {
-  const user = cookies.get('nextcare');
   await store.dispatch(fetchProviders(get(store.getState(), 'filter')));
 
   const state = store.getState();

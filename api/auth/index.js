@@ -6,7 +6,7 @@ const visualize = require('micro-visualize');
 const { router, post } = require('microrouter');
 
 const connectDb = require('../db');
-const Users = require('./models/users');
+const Users = require('../models/users');
 
 connectDb();
 
