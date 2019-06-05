@@ -4,3 +4,5 @@ coverage
 .next
 *.config.js
 
+*.test.js
+
