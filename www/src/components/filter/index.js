@@ -1,9 +1,13 @@
 import { useMemo, useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
+import { GoogleLogout } from 'react-google-login';
+import Cookies from 'universal-cookie';
 import nth from 'lodash/nth';
+import Router from 'next/Router';
 
 import get from 'lodash/get';
+import noop from 'lodash/noop';
 import uniq from 'lodash/uniq';
 import flow from 'lodash/flow';
 import isEmpty from 'lodash/isEmpty';
@@ -54,6 +58,13 @@ const useStyles = makeStyles(theme => ({
   },
   extended: {
     minWidth: `calc(100% - ${theme.spacing(4)}px)`,
+  },
+  logoutButton: {
+    boxShadow: 'none !important',
+    backgroundColor: '#ffc107 !important',
+    '& > div': {
+      backgroundColor: '#ffc107 !important',
+    },
   },
 }));
 
@@ -133,6 +144,12 @@ export default function Filter(props) {
     setReturnields(value);
   }, []);
 
+  const handleLogout = useCallback(() => {
+    const cookies = new Cookies();
+    cookies.remove('nextcare', { path: '/' });
+    Router.push('/');
+  }, []);
+
   const filters = useMemo(() => {
     return settings.map(({ name, display, options, type }) => {
       return (
@@ -194,6 +211,19 @@ export default function Filter(props) {
           <AppBar color="primary" position="relative">
             <Container>
               <Grid container className={classes.gridContainer}>
+                <Grid item xs={12} className={classes.right}>
+                  <GoogleLogout
+                    clientId={
+                      process.env.NODE_ENV === 'production'
+                        ? '452779546633-d4b7j3lh7qstqvqrnprb8k22l6hg1c0c.apps.googleusercontent.com'
+                        : '452779546633-mu0vkejvkapbdhbnmcnhs1itbroft6bc.apps.googleusercontent.com'
+                    }
+                    buttonText="Logout"
+                    onLogoutSuccess={handleLogout}
+                    onLogoutFailure={noop}
+                    className={classes.logoutButton}
+                  />
+                </Grid>
                 {filters}
                 <Grid item xs={12} className={classes.right}>
                   <Button onClick={handleApply}>Apply</Button>

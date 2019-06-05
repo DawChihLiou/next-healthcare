@@ -1,9 +1,12 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
+import noop from 'lodash/noop';
 import Cookies from 'universal-cookie';
 import { makeStyles } from '@material-ui/core/styles';
+import { GoogleLogout } from 'react-google-login';
+import Router from 'next/Router';
 
 import Fab from '@material-ui/core/Fab';
 import Box from '@material-ui/core/Box';
@@ -41,6 +44,9 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     marginTop: theme.spacing(4),
   },
+  logoutButton: {
+    boxShadow: 'none !important',
+  },
 }));
 
 Search.getInitialProps = async ({ req, store }) => {
@@ -76,6 +82,12 @@ export default function Search({ settings }) {
     setIsDrawerOpen(open);
   };
 
+  const handleLogout = useCallback(() => {
+    const cookies = new Cookies();
+    cookies.remove('nextcare', { path: '/' });
+    Router.push('/');
+  }, []);
+
   const content = useMemo(() => {
     if (isLoading) {
       return (
@@ -103,7 +115,22 @@ export default function Search({ settings }) {
       );
     }
 
-    return <ProviderList providers={list} />;
+    return (
+      <Grid container className={classes.centeredContainer}>
+        <GoogleLogout
+          clientId={
+            process.env.NODE_ENV === 'production'
+              ? '452779546633-d4b7j3lh7qstqvqrnprb8k22l6hg1c0c.apps.googleusercontent.com'
+              : '452779546633-mu0vkejvkapbdhbnmcnhs1itbroft6bc.apps.googleusercontent.com'
+          }
+          buttonText="Logout"
+          onLogoutSuccess={handleLogout}
+          onLogoutFailure={noop}
+          className={classes.logoutButton}
+        />
+        <ProviderList providers={list} />;
+      </Grid>
+    );
   }, [isLoading, error, list]);
 
   return (
