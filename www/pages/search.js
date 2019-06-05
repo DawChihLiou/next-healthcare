@@ -13,7 +13,7 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { selectProvider } from '../src/selectors';
+import { selectProvider, selectFilterSettings } from '../src/selectors';
 import { fetchProviders } from '../src/store/actions/provider';
 
 import Filter from '../src/components/filter';
@@ -39,10 +39,13 @@ Search.getInitialProps = async ({ req, store }) => {
   await store.dispatch(fetchProviders(get(store.getState(), 'filter')));
 
   const state = store.getState();
-  return { providers: selectProvider(state) };
+  return {
+    settings: selectFilterSettings(state),
+  };
 };
 
-export default function Search() {
+export default function Search({ settings }) {
+  console.log(settings);
   const classes = useStyles();
   const { list, isLoading, error } = useSelector(selectProvider);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -69,14 +72,20 @@ export default function Search() {
     }
 
     if (error) {
-      return <p>There's an error. Please try again.</p>;
+      return (
+        <Grid container className={classes.centeredContainer}>
+          <p>There's an error. Please try again.</p>
+        </Grid>
+      );
     }
 
     if (isEmpty(list)) {
       return (
-        <p>
-          No data found with your filter criteria. Please adjust and try again
-        </p>
+        <Grid container className={classes.centeredContainer}>
+          <p>
+            No data found with your filter criteria. Please adjust and try again
+          </p>
+        </Grid>
       );
     }
 
@@ -87,7 +96,7 @@ export default function Search() {
     <Box>
       <Hidden xsDown>
         <Container maxWidth={false} className={classes.container}>
-          <Filter done={toggleDrawer(false)} />
+          <Filter done={toggleDrawer(false)} settings={settings} />
         </Container>
       </Hidden>
 
@@ -100,7 +109,7 @@ export default function Search() {
           onClose={toggleDrawer(false)}
           onOpen={toggleDrawer(true)}
         >
-          <Filter done={toggleDrawer(false)} />
+          <Filter done={toggleDrawer(false)} settings={settings} />
         </SwipeableDrawer>
         <Fab
           color="primary"

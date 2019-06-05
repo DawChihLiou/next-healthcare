@@ -25,7 +25,7 @@ import FormControl from '@material-ui/core/FormControl';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
 import { fetchProviders } from '../../../src/store/actions/provider';
-import { selectFilterSettings, selectFilter } from '../../../src/selectors';
+import { selectFilter } from '../../../src/selectors';
 
 const useStyles = makeStyles(theme => ({
   gridContainer: {
@@ -68,10 +68,10 @@ function HideOnScroll(props) {
 }
 
 export default function Filter(props) {
-  const { done } = props;
+  const { done, settings } = props;
+
   const classes = useStyles();
   const dispatch = useDispatch();
-  const settings = useSelector(selectFilterSettings);
   const filter = useSelector(selectFilter);
   const [values, setValues] = useState({
     ...filter,
