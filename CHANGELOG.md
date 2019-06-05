@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/DawChihLiou/next-healthcare/compare/v1.1.0...v1.1.1) (2019-06-05)
+
+
+### Build System
+
+* **lint-staged:** add lint-staged to commit hook ([3b285ae](https://github.com/DawChihLiou/next-healthcare/commit/3b285ae))
+
+
+
 ## [1.1.0](https://github.com/DawChihLiou/next-healthcare/compare/v0.1.1...v1.1.0) (2019-06-05)
 
 
