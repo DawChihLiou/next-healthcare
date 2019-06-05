@@ -1,7 +1,8 @@
-import { useState, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useState, useMemo, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
+import Cookies from 'universal-cookie';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Fab from '@material-ui/core/Fab';
@@ -13,11 +14,18 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { selectProvider, selectFilterSettings } from '../src/selectors';
+import {
+  selectProvider,
+  selectFilterSettings,
+  selectFilter,
+} from '../src/selectors';
+import { setUser } from '../src/store/actions';
 import { fetchProviders } from '../src/store/actions/provider';
 
 import Filter from '../src/components/filter';
 import ProviderList from '../src/components/provider-list';
+
+const cookies = new Cookies();
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -36,8 +44,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 Search.getInitialProps = async ({ req, store }) => {
-  await store.dispatch(fetchProviders(get(store.getState(), 'filter')));
-
   const state = store.getState();
   return {
     settings: selectFilterSettings(state),
@@ -46,8 +52,17 @@ Search.getInitialProps = async ({ req, store }) => {
 
 export default function Search({ settings }) {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { list, isLoading, error } = useSelector(selectProvider);
+  const filter = useSelector(selectFilter);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const user = cookies.get('nextcare');
+
+  useEffect(() => {
+    dispatch(setUser(user));
+    dispatch(fetchProviders(filter, get(user, 'accessToken')));
+  }, []);
 
   const toggleDrawer = open => event => {
     if (

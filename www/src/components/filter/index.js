@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import nth from 'lodash/nth';
 
+import get from 'lodash/get';
 import uniq from 'lodash/uniq';
 import flow from 'lodash/flow';
 import isEmpty from 'lodash/isEmpty';
@@ -25,7 +26,7 @@ import FormControl from '@material-ui/core/FormControl';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
 import { fetchProviders } from '../../../src/store/actions/provider';
-import { selectFilter } from '../../../src/selectors';
+import { selectFilter, selectUser } from '../../../src/selectors';
 
 const useStyles = makeStyles(theme => ({
   gridContainer: {
@@ -73,6 +74,7 @@ export default function Filter(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const filter = useSelector(selectFilter);
+  const user = useSelector(selectUser);
   const [values, setValues] = useState({
     ...filter,
   });
@@ -93,7 +95,10 @@ export default function Filter(props) {
     setReturnields(fields);
   }, [settings]);
 
-  const apply = useCallback(payload => dispatch(fetchProviders(payload)), []);
+  const apply = useCallback(
+    payload => dispatch(fetchProviders(payload, get(user, 'accessToken'))),
+    [user]
+  );
 
   const handleChange = useCallback(e => {
     const { name, value } = e.target;

@@ -13,6 +13,8 @@ export const requestAuthSuccessful = payload => ({
   payload,
 });
 
+export const setUser = requestAuthSuccessful;
+
 export const requestAuthFailed = payload => ({
   type: 'AUTH_FAILED',
   payload,
