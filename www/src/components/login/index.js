@@ -27,9 +27,11 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     boxShadow: 'none',
+    flexWrap: 'wrap',
   },
   content: {
     flex: '1 0 auto',
+    textAlign: 'center',
     paddingTop: 0,
     paddingBottom: 0,
     '&:last-child': {
@@ -39,6 +41,7 @@ const useStyles = makeStyles(theme => ({
   cover: {
     width: '3em',
     height: '3em',
+    margin: '0 auto',
   },
   borderRight: {
     borderRight: `1px solid ${theme.palette.grey[400]}`,
@@ -46,6 +49,9 @@ const useStyles = makeStyles(theme => ({
   },
   loginButton: {
     boxShadow: 'none !important',
+  },
+  loader: {
+    margin: theme.spacing(1.5),
   },
 }));
 
@@ -86,7 +92,7 @@ export default function Login() {
           </CardContent>
           <CardContent className={classes.content}>
             {user.isLoading ? (
-              <CircularProgress />
+              <CircularProgress className={classes.loader} />
             ) : (
               <GoogleLogin
                 clientId={
