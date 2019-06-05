@@ -5,7 +5,7 @@ const compose = require('micro-compose');
 const visualize = require('micro-visualize');
 const { router, post } = require('microrouter');
 
-const connectDb = require('./db');
+const connectDb = require('../db');
 const Users = require('./models/users');
 
 connectDb();
