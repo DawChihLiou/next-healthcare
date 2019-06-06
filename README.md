@@ -6,6 +6,17 @@ Nextcare is a national healthcare provider search tool built with [Next.js](http
 
 ## Overview
 
+- [Quick Start](#quick-start)
+- [Available scripts](#available-scripts)
+- [Build process and workflow](#build-process-and-workflow)
+- [Architecture](#architecture)
+- [Frontend structure](#frontend-structure)
+- [Backend structure](#backend-structure)
+- [Database structure](#database-structure)
+- [Analysis](#analysis)
+- [UI/UX Design](#ui/ux-design)
+- [Conclusion](#conclusion)
+
 ## Quick Start
 
 ### Installation
@@ -107,7 +118,7 @@ To have a closer look of how each part work together, please take a look at the 
 When an [Event](https://reactjs.org/docs/events.html) is triggered in a component, the store dispatches an [**Action**](https://redux.js.org/basics/actions) that carries data in the payload in its callback function. An action persists a structure as following
 
 ```js
-{ type: String, payload: Any }
+{ type: String, payload: Any }
 ```
 
 By dispatching an action, the [Reducer](https://redux.js.org/basics/reducers) in the store knows how to use the payload and update its state. If the action is an **async** action, the Thunk will perform the tasks (HTTP requests, logging, etc.) and dispatch simple actions along the way until the thunk is completed.
@@ -307,7 +318,7 @@ The test performance [Synthetic monitoring](https://en.wikipedia.org/wiki/Synthe
 
 With the current build, the performance metrics are listed bellow
 
-\*\* **Mobile** with Simulated Fast 3G, 4x CPU Slowdown throttling
+**Mobile** with Simulated Fast 3G, 4x CPU Slowdown throttling
 
 - First Contentful Paint: 1.6s
 - First Meaningful Paint: 2.3s
@@ -318,7 +329,7 @@ With the current build, the performance metrics are listed bellow
 
 ![Lighthouse](./documentation/images/lighthouse-phone.png?raw=true 'Lighthouse')
 
-\*\* **Desktop** with no throttling
+**Desktop** with no throttling
 
 - First Contentful Paint: 0.6s
 - First Meaningful Paint: 1.6s
