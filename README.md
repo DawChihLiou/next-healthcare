@@ -1,4 +1,4 @@
-![](./documentation/images/logo.png?raw=true 'Logo')
+![Nextcare](./documentation/images/logo.png?raw=true 'Logo')
 
 # Nextcare
 
@@ -22,14 +22,7 @@ Nextcare is a national healthcare provider search tool built with [Next.js](http
 ### Installation
 
 ```
-npm i -g now
 npm i
-```
-
-### Deploy to Zeit
-
-```
-now
 ```
 
 ## Available scripts
@@ -363,6 +356,13 @@ Please find the following screenshots for the responsive design demonstration.
 
 ![signin-desktop](./documentation/images/signin-desktop.png?raw=true 'signin-desktop')
 ![search-desktop](./documentation/images/search-desktop.png?raw=true 'search-desktop')
+
+## Future Improvement
+
+- Login page showing sign in result from Google Sign-In. Currently it does not reflect whether signin is successful or failed.
+- More sophisticated way to handle cookie with authorization information.
+- Remove "no data found" message when initiating the Search page.
+- Show Desktop filter when scrolling down to make it more accessible to the users.
 
 ## Conclusion
 
