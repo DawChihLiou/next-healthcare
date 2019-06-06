@@ -87,7 +87,30 @@ We deploy the database on [mLab](https://mlab.com/), which is a distributed clou
 
 ![Client](./documentation/images/client.png?raw=true 'Client')
 
+### Technology
+
+- [React](https://reactjs.org/): a component based UI library to effectively render declarative views. We are using [React Hooks](https://reactjs.org/docs/hooks-intro.html) for code quality and performance optimization.
+- [Redux](https://redux.js.org/): a functional state management library that allow us to seperate application state from components to create a clean structure.
+- [Redux Thunk](https://github.com/reduxjs/redux-thunk): Thunks handles side effects to keep components as pure functions and asynchronously update Redux store.
+- [Material UI](https://material-ui.com/): a comprehensive UI library with great design system that aims for optimal user experience
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro): a light weight yet strong testing library for React.
+- [Reselect](https://github.com/reduxjs/reselect): an optimal selector library to select state properties from redux store. **Note**: It has been removed from the project dependency because of lack of use case with the current business requirement. However, it is worth mentioning since it plays a key part of the frontend structure.
+
+### UI Flow
+
+To have a closer look of how each part work together, please take a look at the following diagram.
+
 ![Frontent](./documentation/images/frontend-structure.png?raw=true 'Frontend')
+
+When an [Event](https://reactjs.org/docs/events.html) is triggered in a component, the store dispatches an [**Action**](https://redux.js.org/basics/actions) that carries data in the payload in its callback function. An action persists a structure as following
+
+```js
+{ type: String, payload: Any }
+```
+
+By dispatching an action, the [Reducer](https://redux.js.org/basics/reducers) in the store knows how to use the payload and update its state. If the action is an **async** action, the Thunk will perform the tasks (HTTP requests, logging, etc.) and dispatch simple actions along the way until the thunk is completed.
+
+The component then will consume the state in the store by using selectors to select the state properties it requires to render. Once the component re-computes and being rendered with the updated state, the flow completes.
 
 ## Backend structure
 
