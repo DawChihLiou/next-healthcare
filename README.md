@@ -87,20 +87,22 @@ We deploy the database on [mLab](https://mlab.com/), which is a distributed clou
 
 ![Client](./documentation/images/client.png?raw=true 'Client')
 
+The project adapt [server side rendering](https://dev.to/sunnysingh/the-benefits-and-origins-of-server-side-rendering-4doh) for performance optimization. Client side routing and server side routing are supported in page navigation. This way, we can benefit from SSR in performance boost and still have seamless navigation for better user experience.
+
 ### Technology
 
 - [React](https://reactjs.org/): a component based UI library to effectively render declarative views. We are using [React Hooks](https://reactjs.org/docs/hooks-intro.html) for code quality and performance optimization.
 - [Redux](https://redux.js.org/): a functional state management library that allow us to seperate application state from components to create a clean structure.
 - [Redux Thunk](https://github.com/reduxjs/redux-thunk): Thunks handles side effects to keep components as pure functions and asynchronously update Redux store.
 - [Material UI](https://material-ui.com/): a comprehensive UI library with great design system that aims for optimal user experience
-- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro): a light weight yet strong testing library for React.
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro): a light-weight yet strong testing library for React.
 - [Reselect](https://github.com/reduxjs/reselect): an optimal selector library to select state properties from redux store. **Note**: It has been removed from the project dependency because of lack of use case with the current business requirement. However, it is worth mentioning since it plays a key part of the frontend structure.
 
 ### UI Flow
 
 To have a closer look of how each part work together, please take a look at the following diagram.
 
-![Frontent](./documentation/images/frontend-structure.png?raw=true 'Frontend')
+![Frontend](./documentation/images/frontend-structure.png?raw=true 'Frontend')
 
 When an [Event](https://reactjs.org/docs/events.html) is triggered in a component, the store dispatches an [**Action**](https://redux.js.org/basics/actions) that carries data in the payload in its callback function. An action persists a structure as following
 
@@ -116,15 +118,224 @@ The component then will consume the state in the store by using selectors to sel
 
 ![Server](./documentation/images/server.png?raw=true 'Server')
 
+### Technology
+
+- [Micro](https://github.com/zeit/micro): a asynchronous HTTP microservice library to handle requests and responses
+- [Micro Router](https://github.com/pedronauck/micro-router): a router that handles routes of APIs.
+- [Mongoose](https://mongoosejs.com/): an ORM for MongoDB. It offers rich toolsets to write functional interactions with database.
+
+Our backend are composed with Lambda functions in a Serverless, Function-as-a-Service cloud architecture. Each Lambda is a function with a signature as following
+
+```js
+function(req: Object, res: Object): void
+```
+
+There are two APIs
+
+### **POST** `/api/auth`
+
+To sign in user with Google Sign-In information.
+
+It will find the user based on google Id and update access token in the database. If it is a new user, a new user in database will be created.
+
+**Note**: We are reusing google's access token as the applications access token for the purpose of demonstration.
+
+**Request**
+
+```js
+{
+  body: {
+    accessToken: String,
+    email: String,
+    familyName: String,
+    givenName: String,
+    googleId: String,
+    imageUrl: String,
+    name: String
+  }
+}
+```
+
+**Response**
+
+Code **200**: Ok
+
+```js
+{
+  body: {
+    accessToken: String,
+    email: String,
+    familyName: String,
+    givenName: String,
+    googleId: String,
+    imageUrl: String,
+    name: String
+  }
+}
+```
+
+Code **500**: Internal Error
+
+```js
+{
+  body: {
+      { error: { details: Error }
+  }
+}
+```
+
+### **GET** `/api/providers`
+
+Returns healthcare provider records.
+
+A authorization Bearer token has to be included in the header
+
+**Request**
+
+```js
+{
+  headers: {
+    authorization: String,
+  }
+  query: String
+}
+```
+
+**Query parameters**
+
+```js
+{
+  state: String,
+  min_discharges: String,
+  max_discharges: String,
+  min_average_covered_charges: String,
+  max_average_covered_charges: String,
+  min_average_medicare_payments: String,
+  max_average_medicare_payments: String,
+  return_fields: String,
+}
+```
+
+**Response**
+
+Code **200**: Ok
+
+```js
+{
+  body: {
+    data: {
+      averageCoveredCharges: Number;
+      averageMedicarePayments: Number;
+      averageTotalPayments: Number;
+      drgDefinition: String;
+      hospitalReferralRegionDescription: String;
+      providerCity: String;
+      providerId: String;
+      providerName: String;
+      providerState: String;
+      providerStreetAddress: String;
+      providerZipCode: Number;
+      totalDischarges: Number;
+      _id: String;
+    }
+  }
+}
+```
+
+Code **401**: Unauthorized
+
+```js
+{
+  body: {
+      { error: { details: String }
+  }
+}
+```
+
+Code **500**: Internal Error
+
+```js
+{
+  body: {
+      { error: { details: Error }
+  }
+}
+```
+
 ## Database structure
 
 ![Database](./documentation/images/database.png?raw=true 'Database')
 
+We have two collections in database: **users** and **providers**
+
+### User schema
+
+```js
+{
+  email: String,
+  familyName: String,
+  givenName: String,
+  googleId: String,
+  imageUrl: String,
+  name: String,
+  accessToken: String,
+}
+```
+
+### Provider schema
+
+```js
+{
+  drgDefinition: String,
+  providerId: Number,
+  providerName: String,
+  providerStreetAddress: String,
+  providerCity: String,
+  providerState: String,
+  providerZipCode: Number,
+  hospitalReferralRegionDescription: String,
+  totalDischarges: Number,
+  averageCoveredCharges: Number,
+  averageTotalPayments: Number,
+  averageMedicarePayments: Number,
+}
+```
+
 ## Analysis
 
-![Lighthouse](./documentation/images/lighthouse.png?raw=true 'Lighthouse')
+The test performance [Synthetic monitoring](https://en.wikipedia.org/wiki/Synthetic_monitoring) is done by [Google Lighthouse](https://developers.google.com/web/tools/lighthouse/).
 
-## UI/UX
+With the current build, the performance metrics are listed bellow
+
+\*\* **Mobile** with Simulated Fast 3G, 4x CPU Slowdown throttling
+
+- First Contentful Paint: 1.6s
+- First Meaningful Paint: 2.3s
+- Speed Index: 3.4s
+- First CPU Idle: 3.2s
+- Time to Interactive: 3.2s
+- Estimated Input Latency: 140ms
+
+![Lighthouse](./documentation/images/lighthouse-phone.png?raw=true 'Lighthouse')
+
+\*\* **Desktop** with no throttling
+
+- First Contentful Paint: 0.6s
+- First Meaningful Paint: 1.6s
+- Speed Index: 1.0s
+- First CPU Idle: 1.6s
+- Time to Interactive: 1.6s
+- Estimated Input Latency: 20ms
+
+![Lighthouse](./documentation/images/lighthouse-desktop-no-throttle.png?raw=true 'Lighthouse')
+
+## UI/UX Design
+
+The Project follows Mobile-first and responsive design principle and adapt the content of the pages responsively according to viewport size.
+
+The design is evaluated with [Usability Heuristics](https://www.nngroup.com/articles/ten-usability-heuristics/) to cover User experience evaluation.
+
+Please find the following screenshots for the responsive design demonstration.
 
 ### Phone
 
@@ -141,3 +352,16 @@ The component then will consume the state in the store by using selectors to sel
 
 ![signin-desktop](./documentation/images/signin-desktop.png?raw=true 'signin-desktop')
 ![search-desktop](./documentation/images/search-desktop.png?raw=true 'search-desktop')
+
+## Conclusion
+
+The project has put
+
+- architecture
+- performance
+- development process
+- release pipeline
+- user experience
+- scalability
+
+in mind to deliver optimal quality product with short Time to Market. The technology stack is flexible and proven effective to deliver product for individuals or for teams while focus on delivering great User Experience to the customers.
