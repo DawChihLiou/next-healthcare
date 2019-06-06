@@ -64,15 +64,30 @@ To start developing, Please run `npm run dev`. The project has integrated with a
 
 Once the branch is ready to merge, please run `npm run release` to update `CHANGELOG.me` and generate tag with a version bump. Standard version will commit the change for us when it finishes the process. Execute `git push --follow-tags <remote> <branch>` to push the branch with tags.
 
+The project is using [Prettier](https://prettier.io/) and Eslint to lint the code on the fly. Please make sure you integrate them in your editor. Please turn on `formatOnSave` for the optimal developer experience.
+
 ## Architecture
 
 ![Architecture](./documentation/images/architecture.png?raw=true 'Architecture')
+
+We embrace Cloud computing solutions for the scalability. The project with build and deployed with [Serverless](https://en.wikipedia.org/wiki/Serverless_computing) architecture. Each page in the application and API endpoint is a standalone lambda function. This approach gives us the flexibility of Micro-services and empowers FaaS.
+
+We have 4 Lambdas that are being deployed on Zeit Now.
+
+- **Index page** - `/www/pages/index`: Login with [Google Sign-In](https://developers.google.com/identity/)
+- **Search page** - `/www/pages/search`: provide searching and filtering functionalities the the users to look for healthcare providers.
+- **Authorization API** - `/api/auth`: process signin information form Google Sign-in and response with user information with access token.
+- **Search API** - `/api/provider`: process filter criteria and response with found record from Database.
+
+We adapt NoSQL database for this application. [MongoDB](https://www.mongodb.com) offers scalability and flexibility to query and optimize over data. Its data structure in JSON-like format creates harmony in data throughout the application that increase the agility and speed of the development cycle and developer experience.
+
+We deploy the database on [mLab](https://mlab.com/), which is a distributed cloud Database-as-a-Service for MongoDB. It complements well with serverless architecture and it offer great tooling around backup, security, and analytics.
 
 ## Frontend structure
 
 ![Client](./documentation/images/client.png?raw=true 'Client')
 
-![](./documentation/images/frontend-structure.png?raw=true 'Frontend')
+![Frontent](./documentation/images/frontend-structure.png?raw=true 'Frontend')
 
 ## Backend structure
 
