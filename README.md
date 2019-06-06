@@ -6,7 +6,9 @@ Nextcare is a national healthcare provider search tool built with [Next.js](http
 
 ## Overview
 
-## Installation
+## Quick Start
+
+### Installation
 
 ```
 npm i -g now
@@ -52,6 +54,15 @@ To generate `CHANGELOG.md` and tag your commit for release with [Standard Versio
 Standard version will bump your release version according to your commit messages. In order for Standard version to parse your our commit messages properly, the message should follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.4/).
 
 ## Build process and workflow
+
+The workflow is following [Trunk Based Development](https://trunkbaseddevelopment.com/). Each branch is a trunk and once the the branch is merged to master and pushed, **Zeit Now** will start the deploy process.
+
+To start developing, Please run `npm run dev`. The project has integrated with a couple of git hooks with [Husky](https://github.com/typicode/husky).
+
+- **Pre-commit**: Husky will run linter over your staged files.
+- **Pre-push**: Husky will run linter and unit test against the project to make sure there is no linting errors and pass all the tests.
+
+Once the branch is ready to merge, please run `npm run release` to update `CHANGELOG.me` and generate tag with a version bump. Standard version will commit the change for us when it finishes the process. Execute `git push --follow-tags <remote> <branch>` to push the branch with tags.
 
 ## Architecture
 
