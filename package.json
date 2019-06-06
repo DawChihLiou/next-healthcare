@@ -14,8 +14,12 @@
     "lint": "eslint --fix --color www api",
     "lint:watch": "esw -w --fix --color www api",
     "lint-staged": "lint-staged",
-    "test": "cd www && npm run test",
-    "test:watch": "cd www && npm run test:watch"
+    "test-www": "cd www && npm run test",
+    "test-www:watch": "cd www && npm run test:watch",
+    "test-api": "cd api && npm run test",
+    "test-api:watch": "cd api && npm run test:watch",
+    "test": "npm-run-all test-www test-api",
+    "test:watch": "npm-run-all -p -r test-www:watch test-api:watch"
   },
   "lint-staged": {
     "*.js": [
