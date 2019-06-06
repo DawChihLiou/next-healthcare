@@ -1,4 +1,4 @@
-![](./documentation/images/logo.png?raw=true 'Logo')
+![Nextcare](./documentation/images/logo.png?raw=true 'Logo')
 
 # Nextcare
 
@@ -22,14 +22,7 @@ Nextcare is a national healthcare provider search tool built with [Next.js](http
 ### Installation
 
 ```
-npm i -g now
 npm i
-```
-
-### Deploy to Zeit
-
-```
-now
 ```
 
 ## Available scripts
