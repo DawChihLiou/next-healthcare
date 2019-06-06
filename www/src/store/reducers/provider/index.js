@@ -1,4 +1,4 @@
-const initialState = {
+export const initialState = {
   list: null,
   isLoading: false,
   error: null,

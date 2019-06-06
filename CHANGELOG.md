@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://github.com/DawChihLiou/next-healthcare/compare/v1.2.0...v1.2.1) (2019-06-06)
+
+
+### Bug Fixes
+
+* **jest:** remove test files from www/pages ([9b71eaf](https://github.com/DawChihLiou/next-healthcare/commit/9b71eaf))
+
+
+
+## [1.2.0](https://github.com/DawChihLiou/next-healthcare/compare/v0.1.1...v1.2.0) (2019-06-06)
+
+
+### Bug Fixes
+
+* **_document:** api host string ([#4](https://github.com/DawChihLiou/next-healthcare/issues/4)) ([aeb65e5](https://github.com/DawChihLiou/next-healthcare/commit/aeb65e5))
+* **clientId:** update google client id for production ([#7](https://github.com/DawChihLiou/next-healthcare/issues/7)) ([c09e258](https://github.com/DawChihLiou/next-healthcare/commit/c09e258))
+* **eslint:** ignore .test.js files ([835d332](https://github.com/DawChihLiou/next-healthcare/commit/835d332))
+
+
+### Build System
+
+* **jest:** integrate jest with build and add test for login page ([f2c96d5](https://github.com/DawChihLiou/next-healthcare/commit/f2c96d5))
+* **jest:** integrate jest with build process ([ece88d5](https://github.com/DawChihLiou/next-healthcare/commit/ece88d5))
+* **linter:** integrate eslint to build process ([#10](https://github.com/DawChihLiou/next-healthcare/issues/10)) ([8f985f6](https://github.com/DawChihLiou/next-healthcare/commit/8f985f6))
+
+
+### Features
+
+* ([#9](https://github.com/DawChihLiou/next-healthcare/issues/9)) ([cd90253](https://github.com/DawChihLiou/next-healthcare/commit/cd90253))
+
+
+### Tests
+
+* **fetchProviders:** add test for fetching providers action ([42df70d](https://github.com/DawChihLiou/next-healthcare/commit/42df70d))
+* **provider:** add test for provder reducer ([c99fdbd](https://github.com/DawChihLiou/next-healthcare/commit/c99fdbd))
+* **test script:** integrate jest in /api ([a42d810](https://github.com/DawChihLiou/next-healthcare/commit/a42d810))
+
+
+
 ### [1.1.1](https://github.com/DawChihLiou/next-healthcare/compare/v1.1.0...v1.1.1) (2019-06-05)
 
 

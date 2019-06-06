@@ -1,6 +1,8 @@
 node_modules
+coverage
 
 .next
-
 *.config.js
+
+*.test.js
 

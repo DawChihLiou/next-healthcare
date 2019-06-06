@@ -7,7 +7,9 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "now-build": "next build"
+    "now-build": "next build",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@material-ui/core": "^4.0.1",
@@ -36,5 +38,14 @@
     "redux-thunk": "^2.3.0",
     "styled-jsx": "^3.2.1",
     "universal-cookie": "^4.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@testing-library/react": "^8.0.1",
+    "babel-jest": "^24.8.0",
+    "fetch-mock": "^7.3.3",
+    "jest": "^24.8.0",
+    "jest-svg-transformer": "^1.0.0",
+    "redux-mock-store": "^1.5.3"
   }
 }

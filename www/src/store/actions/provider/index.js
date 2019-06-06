@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-unfetch';
+import 'isomorphic-unfetch';
 import forOwn from 'lodash/forOwn';
 
 import { setFilter } from '../filter';
