@@ -209,14 +209,14 @@ A authorization Bearer token has to be included in the header
 
 ```js
 {
-  state: String,
-  min_discharges: String,
-  max_discharges: String,
-  min_average_covered_charges: String,
-  max_average_covered_charges: String,
-  min_average_medicare_payments: String,
-  max_average_medicare_payments: String,
-  return_fields: String,
+  state?: String,
+  min_discharges?: String,
+  max_discharges?: String,
+  min_average_covered_charges?: String,
+  max_average_covered_charges?: String,
+  min_average_medicare_payments?: String,
+  max_average_medicare_payments?: String,
+  return_fields?: String,
 }
 ```
 
