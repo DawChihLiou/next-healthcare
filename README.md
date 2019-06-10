@@ -270,9 +270,11 @@ Code **500**: Internal Error
 
 ![Database](./documentation/images/database.png?raw=true 'Database')
 
-We have two collections in database: **users** and **providers**
+We have two collections in database: **users** and **providers**. They is indexed in the combaniations of Single Field Indexes and Compound Indexes to speed up the query performance.
 
-### User schema
+### User
+
+**Schema**
 
 ```js
 {
@@ -286,7 +288,16 @@ We have two collections in database: **users** and **providers**
 }
 ```
 
-### Provider schema
+**Indexes**
+
+```js
+{"googleId": 1}
+{"accessToken": 1}
+```
+
+### Provider
+
+**Schema**
 
 ```js
 {
@@ -302,6 +313,17 @@ We have two collections in database: **users** and **providers**
   averageCoveredCharges: Number,
   averageTotalPayments: Number,
   averageMedicarePayments: Number,
+}
+```
+
+**Indexes**
+
+```js
+{
+  "providerState": 1,
+  "totalDischarges"?: 1,
+  "averageCoveredCharges"?: 1,
+  "averageMedicarePayments"?: 1
 }
 ```
 
