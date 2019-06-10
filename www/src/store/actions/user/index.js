@@ -35,7 +35,10 @@ export const authorize = payload => async dispatch => {
 
     dispatch(requestAuthSuccessful(payload));
     Router.push('/search');
-    cookies.set('nextcare', payload, { path: '/' });
+    cookies.set('nextcare', payload, {
+      path: '/',
+      expires: new Date(payload.expiresAt),
+    });
   } catch (err) {
     dispatch(requestAuthFailed(err));
   }
