@@ -71,8 +71,8 @@ export default function Login() {
     dispatch(authorize(data));
   }, []);
 
-  const handleAuthFailure = useCallback(({ details }) => {
-    dispatch(requestAuthFailed(details));
+  const handleAuthFailure = useCallback(err => {
+    dispatch(requestAuthFailed(err));
   }, []);
 
   return (

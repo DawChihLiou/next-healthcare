@@ -360,9 +360,8 @@ Please find the following screenshots for the responsive design demonstration.
 ## Future Improvement
 
 - Login page showing sign in result from Google Sign-In. Currently it does not reflect whether signin is successful or failed.
-- More sophisticated way to handle cookie with authorization information.
-- Remove "no data found" message when initiating the Search page.
 - Show Desktop filter when scrolling down to make it more accessible to the users.
+- Use Windowing technique to render large number of list items
 
 ## Conclusion
 
