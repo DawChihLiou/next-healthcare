@@ -22,7 +22,6 @@ import {
   selectFilterSettings,
   selectFilter,
 } from '../src/selectors';
-import { setUser } from '../src/store/actions';
 import { fetchProviders } from '../src/store/actions/provider';
 
 import Filter from '../src/components/filter';
@@ -56,10 +55,9 @@ function Search({ settings }) {
   const filter = useSelector(selectFilter);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const user = cookies.get('nextcare');
-
   useEffect(() => {
-    dispatch(setUser(user));
+    // Search page will only be mounted when user is authorized
+    const user = cookies.get('nextcare');
     dispatch(fetchProviders(filter, get(user, 'accessToken')));
   }, []);
 

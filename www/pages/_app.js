@@ -1,20 +1,16 @@
 import Head from 'next/head';
-import Router from 'next/router';
 import { Provider } from 'react-redux';
-import Cookies from 'universal-cookie';
 import App, { Container } from 'next/app';
 import withRedux from 'next-redux-wrapper';
 import { ThemeProvider } from '@material-ui/styles';
-import get from 'lodash/get';
 
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import configureStore from '../src/store';
+import { checkUserInCookies } from '../src/store/actions';
 
 import theme from '../src/theme';
-
-const cookies = new Cookies();
 
 class CustomApp extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -27,31 +23,18 @@ class CustomApp extends App {
 
   componentDidMount() {
     const jssStyles = document.querySelector('#jss-server-side');
-    const user = cookies.get('nextcare');
+    const { store } = this.props;
 
     if (jssStyles) {
       jssStyles.parentNode.removeChild(jssStyles);
     }
 
-    if (get(user, 'accessToken') && window.location.pathname !== '/search') {
-      Router.push('/search');
-    }
-
-    if (!get(user, 'accessToken') && window.location.pathname !== '/') {
-      Router.push('/');
-    }
+    store.dispatch(checkUserInCookies());
   }
 
   componentDidUpdate() {
-    const user = cookies.get('nextcare');
-
-    if (get(user, 'accessToken') && window.location.pathname !== '/search') {
-      Router.push('/search');
-    }
-
-    if (!get(user, 'accessToken') && window.location.pathname !== '/') {
-      Router.push('/');
-    }
+    const { store } = this.props;
+    store.dispatch(checkUserInCookies());
   }
 
   render() {
