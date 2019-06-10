@@ -92,6 +92,13 @@ export default function Filter(props) {
   const [returnFields, setReturnields] = useState([]);
 
   useEffect(() => {
+    const appliedReturnField = get(filter, 'return_fields');
+
+    if (appliedReturnField) {
+      setReturnields(appliedReturnField.split(','));
+      return;
+    }
+
     const index = findIndex(
       settings,
       setting => setting.name === 'return_fields'
@@ -104,7 +111,7 @@ export default function Filter(props) {
 
     const fields = found.options.map(op => op.value);
     setReturnields(fields);
-  }, [settings]);
+  }, []);
 
   const apply = useCallback(
     payload => dispatch(fetchProviders(payload, get(user, 'accessToken'))),
