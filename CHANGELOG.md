@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/DawChihLiou/next-healthcare/compare/v1.4.0...v1.4.1) (2019-06-10)
+
+
+### Tests
+
+* **login:** add test for login component ([ab2bb0d](https://github.com/DawChihLiou/next-healthcare/commit/ab2bb0d))
+
+
+
 ## [1.4.0](https://github.com/DawChihLiou/next-healthcare/compare/v0.1.1...v1.4.0) (2019-06-10)
 
 
