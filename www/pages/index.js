@@ -1,20 +1,6 @@
-import { useEffect } from 'react';
-import get from 'lodash/get';
-import Router from 'next/router';
-import Cookies from 'universal-cookie';
-
 import Login from '../src/components/login';
 
-const cookies = new Cookies();
-
 function Index({ authEndpoint }) {
-  useEffect(() => {
-    const user = cookies.get('nextcare');
-    if (get(user, 'accessToken')) {
-      Router.push('/search');
-    }
-  }, []);
-
   return <Login url={authEndpoint} />;
 }
 

@@ -63,12 +63,16 @@ export default function Login() {
   }, []);
 
   const handleAuthSuccess = useCallback(auth => {
-    const data = { ...auth.profileObj, accessToken: auth.accessToken };
+    const data = {
+      ...auth.profileObj,
+      accessToken: auth.accessToken,
+      expiresAt: auth.tokenObj.expires_at,
+    };
     dispatch(authorize(data));
   }, []);
 
-  const handleAuthFailure = useCallback(({ details }) => {
-    dispatch(requestAuthFailed(details));
+  const handleAuthFailure = useCallback(err => {
+    dispatch(requestAuthFailed(err));
   }, []);
 
   return (
