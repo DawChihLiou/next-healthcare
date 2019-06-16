@@ -22,6 +22,7 @@ Nextcare is a national healthcare provider search tool built with [Next.js](http
 ### Installation
 
 ```
+npm i -g now
 npm i
 ```
 
